@@ -1,0 +1,185 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "ShoppingListAPI",
+    "description": "A simple API for managing a shopping list.",
+    "version": "0.0.1",
+    "contact": {
+      "name": "Ashley Williams",
+      "email": "ashley.williams@mmu.ac.uk"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3333"
+    }
+  ],
+  "paths": {
+    "/list": {
+      "get": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "View all items",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListItems"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "Add an item to list",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/list/:id": {
+      "get": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "View details of a single item",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "Update an item",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "Delete an item",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "description": "A unique integer ID",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "item_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "unit_price": {
+            "type": "integer"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "ListItems": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Item"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Shopping List",
+      "description": "Endpoints concerned with a managing the shopping list"
+    }
+  ]
+}
