@@ -1,22 +1,25 @@
 import React from 'react';
 import { Image, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import { createAppContainer, SwitchNavigator, StackNavigator} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from './screens/homescreen.js';
+import AccountPage from './screens/accountpage.js';
 import Serach from './screens/serach.js';
-import LoginPage from './screens/loginPage.js';
-import signedinhome from './screens/loggedHomeScreen.js';
- 
+import MakeChit from './screens/MakeChit.js';
+import drafts from './screens/drafts.js';
+
+//import LoginPage from './screens/loginPage.js';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import { Icon } from 'native-base';
 
-const AppStackNav = createBottomTabNavigator( {
+
+
+const AppStackNav = createBottomTabNavigator({
 
     Home: {
-
         screen: HomeScreen,
         navigationOptions: {
-            tabBarLabel: "Home Page",
+            tabBarLabel: "Home",
             tabBarIcon: () => (
                 <Image
                     source={require('./home.jpg')}
@@ -29,18 +32,27 @@ const AppStackNav = createBottomTabNavigator( {
             )
         }
     },
+    AccountPage: {
+        screen: AccountPage,
+        tabBarLabel: "your account"
+
+    },
+
     serach: {
         screen: Serach,
-        tabBarLabel: "account page",
-        
-        
+        tabBarLabel: "serach for a user",
     },
-    login: {
-        screen: LoginPage,
-        tabBarLabel: "login page"
-        
-    }
 
+    makechit: {
+        scren: MakeChit,
+        tabBarLabel: "make a chit",
+
+    },
+    drafts: {
+        screen: drafts,
+        tabBarLabel: "drafts"
+
+    }
 });
 
 const styles = StyleSheet.create({
@@ -56,11 +68,5 @@ const styles = StyleSheet.create({
 
 
 const AppContainer = createAppContainer(AppStackNav);
-const AppStack = ({ signedinHome: signedinhome })
-
-export default SwitchNavigator(
-    {
-        AppContainer: AppContainer,
-        AppStack: AppStack
-    }
-);
+//const AppSack = ({ signedinHome: signedinHome })
+export default AppContainer;

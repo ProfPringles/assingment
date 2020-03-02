@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
