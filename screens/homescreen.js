@@ -168,7 +168,7 @@ class HomeScreen extends Component {
                         </View>
                     </TouchableOpacity>}
 
-                    keyExtractor={({ item }, index) => item}
+                    keyExtractor={({ item }, indeax) => item}
                 />
             </ScrollView>
         );

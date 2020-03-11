@@ -39,9 +39,9 @@ class Loginpage extends Component {
     }
 
 
-    login  = async () =>{
+    login(){
         console.log("has run")
-            fetch("http://10.0.2.2:3333/api/v0.0.5/login",
+           return fetch("http://10.0.2.2:3333/api/v0.0.5/login",
             {
                 method: 'POST',
                 headers: {
@@ -53,19 +53,11 @@ class Loginpage extends Component {
                     password: this.state.password
                 })
             })
-            .then((response) = async(response) => response.json())
-            .then((responseJson) = async (responseJson) => {
+            .then((response) => response.json())
+            .then((responseJson)  => {
                 this.setState({
                     data :responseJson
                 })
-                try{
-                    await AsyncStorage.setItem('Token', JSON.stringify(this.state.data.token))
-                    console.log(JSON.stringify(this.state.data.token))
-                            
-                }catch(error){
-                    console.log(error)
-                }
-                //console.log(this.state.data.token)
             })
             .catch((error) => {
                 console.log(error);
@@ -74,18 +66,28 @@ class Loginpage extends Component {
     }
 
     componentDidMount() {
-        this.login
+        this.login()
     }
         
 
     checkAuth  = async() =>{
-       
-       var token = await AsyncStorage.getItem('Token')
-       console.log("token: " +token)
-       if(token !=null || token ==""){
-            this.props.navigation.navigate('signedinhome')
-       }
-       AsyncStorage.removeItem('Token');
+        try{
+            AsyncStorage.setItem('Token', JSON.stringify(this.state.data.token))
+            AsyncStorage.setItem('UserID', JSON.stringify(this.state.data.id))
+
+            console.log(JSON.stringify(JSON.stringify(this.state.data.id)))        
+        }catch(error){
+            console.log(error)
+        }
+        
+        var token = await AsyncStorage.getItem('Token')
+        var id = await AsyncStorage.getItem('UserID')
+
+        if(token !=null &token !=""){
+                this.props.navigation.navigate('signedinhome')
+        }
+        console.log("token: " +token)
+        console.log("id: " +id)
     }
     
  

@@ -10,8 +10,9 @@ import LoginPage from './screens/loginPage.js';
 import signedinhome from './screens/loggedHomeScreen.js';
 import AccountScreen from './screens/accountpage.js';
 import MakeChitScreen from './screens/MakeChit.js';
-import DraftsScreen from './screens/drafts.js';
 
+import DraftsScreen from './screens/drafts.js';
+import loggedInAcountScreen from './screens/loggedInAcountScreen.js'; 
 
 import { Icon } from 'native-base';
 import accountpage from './screens/accountpage.js';
@@ -97,8 +98,8 @@ const AppStackNavSignedin = createBottomTabNavigator( {
             )
         }
     },
-    AccountScreen: {
-        screen: AccountScreen,
+    LoggedInAccountScreen: {
+        screen: loggedInAcountScreen,
         tabBarLabel: "account screen",
         
         

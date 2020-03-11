@@ -1,21 +1,45 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox } from 'react-native';
 
 
-class AccountPage extends Component {
+class DraftsPage extends Component {
+    
+    constructor(props){
+        super(props)
+        
+        this.state={
+            savedChit: "", 
+            allchits: []  
+        } 
+    }
+
+
+    getChits = async()=>{
+        var allchits = []
+        AsyncStorage.getItem('ChitContent', (error, result) => {
+            this.setState({ 
+                savedChit: result 
+            }, function () {
+            });
+        });
+    }
+
+
+    componentDidMount() {
+        this.getChits()
+    }
+       
+    
     render() {
         return (
             <View>
             <Text>
-               Drafts
+               {this.state.savedChit}
             </Text>
-            
-                <Button
-                    title="home screen"
-                    onPress={() => this.props.navigation.navigate('Home')}
-                />
+
+
             </View>
         );
     }
 }
-export default AccountPage;
+export default DraftsPage;
