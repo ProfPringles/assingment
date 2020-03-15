@@ -71,7 +71,7 @@ export default class Profile extends Component {
             <View style={styles.container} >                    
                     
 
-                <TouchableOpacity style={styles.back}
+                <TouchableOpacity accessible={true} style={styles.back}
                     onPress={() => 
                         this.props.navigation.navigate('LoggedInAccountScreen')
                     }>
@@ -79,7 +79,7 @@ export default class Profile extends Component {
                          back
                     </Text>
                 </TouchableOpacity> 
-                <Label style={styles.PPtittle}>change picture </Label>
+                <Label accessible={true} style={styles.PPtittle}>change picture </Label>
                     <TouchableOpacity style={styles.PP}
                     onPress={()=>{
                         this.props.navigation.navigate('cameraPage')
@@ -98,28 +98,28 @@ export default class Profile extends Component {
                     </TouchableOpacity>
 
 
-                    <Label style={styles.emailTittle} >email</Label>
+                    <Label accessible={true} style={styles.emailTittle} >email</Label>
                     <TextInput style={{top:70, left:2, fontSize:20, color:"white", position:"absolute" , borderBottomColor: "white",borderBottomWidth: 1,width: "99%",  }}
                          placeholder="|"
                          value={this.state.email}
                          onChangeText={(email) => this.setState({ email })}
                     ></TextInput>
                     
-                    <Label style={styles.password} >change password</Label>
+                    <Label accessible={true} style={styles.password} >change password</Label>
                     <TextInput style={{top:160, left:2, fontSize:20, color:"white", position:"absolute" , borderBottomColor: "white",borderBottomWidth: 1,width: "99%",  }}
                          placeholder="|"
                          value={this.state.password}
                          onChangeText={(password) => this.setState({ password })}
                     ></TextInput>
 
-                    <Label style={styles.name} > change first name </Label>
+                    <Label accessible={true} style={styles.name} > change first name </Label>
                     <TextInput style={{top:250, left:2, fontSize:20, color:"white", position:"absolute" , borderBottomColor: "white",borderBottomWidth: 1,width: "99%",  }}
                          placeholder="|"
                          value={this.state.given_name}
                          onChangeText={(given_name) => this.setState({ given_name })}
                     ></TextInput>
 
-                    <Label style={styles.givenname} >change second name</Label>
+                    <Label accessible={true} style={styles.givenname} >change second name</Label>
                     <TextInput style={{top:350, left:2, fontSize:20, color:"white", position:"absolute" , borderBottomColor: "white",borderBottomWidth: 1,width: "99%",  }}
                          placeholder="|"
                          value={this.state.family_name}
@@ -127,6 +127,7 @@ export default class Profile extends Component {
                     ></TextInput>
                    
                    <TouchableOpacity
+                   accessible={true}
                    style={styles.submit}
                     onPress={() => 
                         this.postChange().then(()=>{

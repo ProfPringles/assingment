@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, YellowBox, Alert } from 'react-native';
 import React, { Component } from 'react';
-import { Label, Form } from 'native-base';
+import { Label, Form,  StyleProvider,Button  } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { multiply } from 'react-native-reanimated';
+
 //import console = require('console');
 //import { HeaderBackground } from 'react-navigation-stack';
 //import FontAwesome, { Icons, parseIconName, parseIconFromClassName, IconTypes  } from 'react-native-fontawesome';
@@ -85,6 +86,8 @@ class Loginpage extends Component {
 
         if(token !==null){
                 this.props.navigation.navigate('signedinhome')
+        }else{
+            Alert.alert("you have enterted your email or password wrong please try again")
         }
         console.log("token: " +token)
         console.log("id: " +id)
@@ -103,14 +106,12 @@ class Loginpage extends Component {
             <KeyboardAvoidingView style={styles.wrapper} behavior="padding">
                 <View style={styles.scrollViewWrapper}>
                     <Text style={styles.loginHeader}>chittr</Text>
-                    <ScrollView style={styles.ScrollView}>
-
-
-                        
+                    <ScrollView style={styles.ScrollView}>                        
                         <Image
                                 style={{
                                     left: 130,
-                                    flex: 2,
+                                    flex: 1,
+                                    top:5,
                                     //backgroundColor: '#A9A9A9',
                                     textAlign: 'Center',
                                     width: 150,
@@ -135,9 +136,17 @@ class Loginpage extends Component {
                         />
 
                     </ScrollView>
-                    <TouchableOpacity
+                    <Button primary
+                    accessible={true}
                         style={
-                            { flex: 1, left: 300, bottom: 80, height: 100, width:100}
+                            { flex: 1, left: 100, flex: 1,
+                                left: 97,
+                                top:450,
+                                width: 215, height: 30,
+                                textAlign: 'center',
+                                position: "absolute",
+                                borderRadius: 100 / 2,
+                                backgroundColor: 'white',}
                         }
                         onPress={() =>{
                                 console.log("pressed"),
@@ -147,34 +156,39 @@ class Loginpage extends Component {
                             } 
                          }
                         >
-
                         <Text style={{
-                            flex: 1,
-                            //left: 270,
-                            top: 30,
-                            width: 100, height: 50,
+                            left: 70,
                             textAlign: 'center',
-                            //position: "absolute",
-                            borderRadius: 100 / 2,
-                            backgroundColor: 'white',
+                            fontSize: 20,
+                            fontFamily: 'Freight Sans'
                         }}>
-                            <Image
-                                style={{
-                                    flex: 1,
-                                    right: 10,
-                                    top: 0, 
-                                    backgroundColor: 'white',
-                                    //textAlign: 'Center',
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('./login.jpg')}
-                                name="login"
-                            />
+                            sign in
 
                         </Text>
-                    </TouchableOpacity>
-
+                    </Button>
+                    <Button
+                    accessible={true}
+                    onPress={()=>{ this.props.navigation.navigate('signUpPage')}} 
+                     style={
+                            { flex: 1, left: 100, flex: 1,
+                                left: 97,
+                                top:500,
+                                width: 215, height: 30,
+                                textAlign: 'center',
+                                position: "absolute",
+                                borderRadius: 100 / 2,
+                                backgroundColor: 'white',}
+                        }>
+                    <Text  style={{
+                            left: 70,
+                            textAlign: 'center',
+                            fontSize: 20,
+                            fontFamily: 'Freight Sans'
+                        }}>
+                        sign up
+                    </Text>   
+                    </Button>    
+                    
                 </View>
             </KeyboardAvoidingView>
         );
@@ -236,7 +250,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     scrollViewWrapper: {
-        marginTop: 70,
+        marginTop: 0,
         flex: 1
     },
     avoidView: {
@@ -246,15 +260,13 @@ const styles = StyleSheet.create({
         flex: 1
     },
     loginHeader: {
+        top: 20,
         fontFamily: 'Freight Sans',
         fontSize: 28,
         color: 'white',
-        //fontWeight: "1",
-        //marginBottom: 0,
-        paddingLeft: 170,
-        paddingRight: 50,
-        paddingTop: -100,
-        flex: 1
+        alignSelf: 'center',
+        flex: 1,
+        padding: 0
     }
 
 });

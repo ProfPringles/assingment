@@ -9,7 +9,9 @@ export default class cameraPageChit extends Component {
 
         this.state={
             user_id:'',
-            token:''
+            token:'', 
+            imageData: '',
+
         }
     }
     getUserIDToken = async () => {
@@ -27,20 +29,11 @@ export default class cameraPageChit extends Component {
             if (this.camera) {
                     const options = { quality: 0.5, base64: true };
                     const data = await this.camera.takePictureAsync(options);
-                    console.log(data.uri);
-                    return fetch("http://10.0.2.2:3333/api/v0.0.5/chits"+this.state.user_id+"/photo",
-                    {
-                        method: 'POST',
-                        headers: {
-                        'Content-Type': 'image/jpeg',
-                        'X-Authorization': this.state.token
-                    },
-                    body: data
-                    }).then((response) => {
-                        console.log("image uploaded")
-                    }).catch((error) => {
-                    console.log(error);
-                });
+                    console.log(data.uri);                     
+                    await AsyncStorage.setItem('ImageData', JSON.stringify(data))     
+                    console.log("sdfsdf image saved")       
+                    const imgData = await AsyncStorage.getItem('ImageData')
+                    console.log(imgData.uri)
             }
         }
     componentDidMount(){
@@ -58,7 +51,7 @@ export default class cameraPageChit extends Component {
                     width: '100%'
                     }}
                     >
-                    <TouchableOpacity style={styles.back}
+                    <TouchableOpacity accessible={true} style={styles.back}
                     onPress={() => 
                         this.props.navigation.navigate('MakeChitScreen')
                     }>

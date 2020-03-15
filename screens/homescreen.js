@@ -92,7 +92,7 @@ class HomeScreen extends Component {
                               borderBottomWidth: 1,
                               flexDirection:"column",
                               backgroundColor: "#1b2836"}} 
-                              
+                              accessible={true}
                               onPress={() => this.props.navigation.navigate('serach')}>
                             
                             <View style={styles.item}> 
@@ -103,7 +103,7 @@ class HomeScreen extends Component {
                                 width:100,
                                 height: 100,
                                 resizeMode : 'stretch'
-                            }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.user.user_id}/photo`}}/>    
+                            }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.chit_id}/photo`}}/>    
                             
                             <Text style={styles.NameTittle}>
                                 {Object.values(item.user.given_name) }

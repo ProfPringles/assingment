@@ -44,8 +44,6 @@ export default class Profile extends Component {
             userPicUri: ''
         }
     }
-
-
     getUserID = async () => {
         const response = await AsyncStorage.getItem('UserID');
         const Token = await AsyncStorage.getItem('LoginToken')
@@ -205,23 +203,17 @@ export default class Profile extends Component {
                 console.log(error);
             });
     }
-
-
     clearAsync = async() =>{
         AsyncStorage.removeItem('Token');
     }
-
-
     componentDidMount() {
         this.getUserID()
     }
-
-
     render() {
         return (
 
             <View style={styles.container}>
-                <Button style={styles.buttonContainer}  onPress={() =>{
+                <Button accessible={true} style={styles.buttonContainer}  onPress={() =>{
                         console.log("pressed"),
                         this.clearAsync().then(() =>{
                             if(this.state.token === null){
@@ -231,7 +223,8 @@ export default class Profile extends Component {
                             }
                                 
                         })
-                    } 
+                    }
+                     
                 }>
                     <Text>home</Text>
                 </Button>
@@ -245,11 +238,11 @@ export default class Profile extends Component {
                     <Text style={styles.name}>{this.state.UserData.family_name}</Text>
                     <Text style={styles.accountname}>{this.state.UserData.given_name}</Text>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{padding:5, left: 5, top: 100 }}>
+                    <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{padding:5, left: 5, top: 100 }}>
                         <Text style={{color:"white"}}>Followers {this.followersLength()}</Text>
                     </TouchableOpacity>
 
-                   <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
+                   <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
                     <Text style={{color:"white"}} >following {this.followingLength()}</Text>
                     </TouchableOpacity>
                 </View>
@@ -258,7 +251,7 @@ export default class Profile extends Component {
                   <Image style={styles.backgroundImage} source={require('./cool-banners-25-cute-girly-cool-twitter-header-banners-pictures.jpg')}/>
                 </View>
                 
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity accessible={true} onPress={()=>{
                     if(this.isfollowing(this.state.listOfFollowers)){
                         this.unfollow()
                     }else{

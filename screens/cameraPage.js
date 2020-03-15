@@ -61,7 +61,7 @@ export default class cameraPage extends Component {
                         width: '100%'
                     }}
                     >
-                    <TouchableOpacity style={styles.back}
+                    <TouchableOpacity style={styles.back} accessible={true}
                         onPress={() => 
                             this.props.navigation.navigate('LoggedInAccountScreen')
                         }>

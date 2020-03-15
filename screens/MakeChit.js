@@ -64,7 +64,7 @@ class MakeChit extends Component {
             });
         };
 
-        /*imagePicker = () =>{
+        imagePicker = () =>{
             ImagePicker.showImagePicker(options, (response) => {
                 //console.log('Response = ', response);
               
@@ -88,7 +88,7 @@ class MakeChit extends Component {
                   console.log(JSON.stringify(this.state.photo))
                 }
               });
-        }*/
+        }
 
 
         getUserIDToken = async () => {
@@ -138,49 +138,60 @@ class MakeChit extends Component {
         }
 
         PostChit(timestamp, longitude, latitude) {
+            console.log(longitude)
             console.log(this.state.token)
-
             if(!this.state.photo){
-            return  fetch("http://10.0.2.2:3333/api/v0.0.5/chits",{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Authorization': this.state.token
-                },
-                body: JSON.stringify({
-                        chit_id: this.state.chit_id, 
-                        timestamp: timestamp, 
-                        chit_content: this.state.chit_content,
-                        longitude: longitude , 
-                        latitude: latitude,
-                        user_id: this.state.UserData.user_id,
-                        given_name: this.state.UserData.given_name, 
-                        family_name: this.state.UserData.family_name,
-                        email: this.state.UserData.email
-                })
-            }).then((response) => response.json())
-            .then((responseJson)=> {
-                console.log("here", responseJson)
-            })
-            .catch((error) => {
-                console.log("error", error)
-            });
-        }else{
-            console.log("posting image chit")
-            return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+this.state.user_id+"/photo", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'image/jpeg',
-                    'X-Authorization': this.state.token
-                },
-                body: this.state.photoData
-                }).then((response) =>{
-                    console.log("image uploaded " + response.json())
-                }).catch((error) =>{
-                    console.log(error)
-                })
-            }
+                if(this.state.chit_content === '' || this.state.chit_content === ""){
+                    Alert.alert("chit must contain atleast one letter :)")
+                }else {
+                    return  fetch("http://10.0.2.2:3333/api/v0.0.5/chits",{
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'X-Authorization': this.state.token
+                        },
+                        body: JSON.stringify({
+                            chit_id: this.state.chit_id, 
+                            timestamp: timestamp, 
+                            chit_content: this.state.chit_content,
+                            user_id: this.state.UserData.user_id,
+                            given_name: this.state.UserData.given_name, 
+                            family_name: this.state.UserData.family_name,
+                            email: this.state.UserData.email,
+                            longitude: longitude , 
+                            latitude: latitude,
+                        })
+                    }).then((response) => response.json())
+                    .then((responseJson)=> {
+                        console.log("here", responseJson.chit_id)
+                        this.setState({
+                            chit_id: responseJson.chit_id
+                        })
+                    })
+                    .catch((error) => {
+                        console.log("error", error)
+                    });
+                
+                    }
+                }else{
+                    console.log(this.state.photoData)
+                    console.log(this.state.chit_id)
+                    
+                    return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+this.state.chit_id+"/photo", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'image/jpeg',
+                            'X-Authorization': this.state.token
+                        },
+                        body: this.state.photoData
+                        }).then((response) =>{
+                            console.log("image uploaded " + response.json())
+                        }).catch((error) =>{
+                            console.log(error)
+                        })
+                 }
         }
+
         WordCount(str) { 
             const charslength = str.split("").length
             if(charslength === 147){
@@ -232,13 +243,15 @@ class MakeChit extends Component {
 
 
                 <TouchableOpacity style={styles.Images}
-                    onPress={() =>{this.props.navigation.navigate('cameraPageChit')}}
+                    onPress={() =>{this.imagePicker()}}
                     >
                     <Text style={styles.postChitText}>
                         upload image
                     </Text>
                 </TouchableOpacity>
-
+                    
+                <Image source={{uri: this.state.photo}}/>
+                
                 <View style={{left: 50}}>
                     <Image source={{uri: this.state.photo}}
                      style={{width: 300, height: 300}}

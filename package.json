@@ -14,6 +14,7 @@
     "async": "^3.2.0",
     "expo-constants": "^8.0.0",
     "install-peers": "^1.0.3",
+    "jetifier": "^1.6.5",
     "native-base": "^2.13.8",
     "react": "16.9.0",
     "react-native": "0.61.5",

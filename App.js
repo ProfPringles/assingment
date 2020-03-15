@@ -18,7 +18,7 @@ import editAccountScreen from './screens/editAccountPage.js';
 import FollowingScreen from './screens/following.js'
 import FollowersScreen from './screens/followers.js'
 import cameraPage from './screens/cameraPage.js'
-
+import signUpPage from './screens/signUpPage.js'
 
 import { Icon } from 'native-base';
 import accountpage from './screens/accountpage.js';
@@ -219,7 +219,8 @@ const App = createSwitchNavigator(
         Auth: AppStackNavSignedin,
         AccountScreen, accountpage,
         editAccountScreen, FollowingScreen,
-        FollowersScreen,cameraPage,cameraPageChit
+        FollowersScreen,cameraPage,cameraPageChit, 
+        signUpPage
     },
     {
         initialRouteName: 'App',

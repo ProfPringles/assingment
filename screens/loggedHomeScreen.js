@@ -65,7 +65,7 @@ class HomeScreen extends Component {
                     
                     data={this.state.chitData}
                     renderItem={({ item, index }) =>
-                        <TouchableOpacity style={
+                        <TouchableOpacity accessible={true} style={
                             { padding: 10, flex: 1, 
                               borderBottomColor: "black", 
                               borderBottomWidth: 1,

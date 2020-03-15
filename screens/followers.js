@@ -62,7 +62,7 @@ export default class followers extends Component {
         render(){
             return(
                 <View style={{backgroundColor:"#1b2836", padding: 20}}>
-                    <TouchableOpacity
+                    <TouchableOpacity accessible={true}
                         style={{ width: 60, height: 30, top: -10, left: -15, borderWidth: 1,borderColor: "white", backgroundColor: '#ce1d1d' }}
                         onPress={() =>{
                                 if(this.state.token == null){
@@ -85,7 +85,7 @@ export default class followers extends Component {
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('')}>
 
                                     <View style={styles.item}> 
-                                        <Text style={{color:"white", fontSize: 20}} >{item.family_name}</Text>           
+                                        <Text accessible={true} style={{color:"white", fontSize: 20}} >{item.family_name}</Text>           
                                     </View>    
                                 </TouchableOpacity>}
                             keyExtractor={({ id }, index) => id}

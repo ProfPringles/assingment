@@ -65,6 +65,7 @@ export default class following extends Component {
             return(
                 <View style={{backgroundColor:"#1b2836", padding: 20}}>
                 <TouchableOpacity
+                    accessible={true}
                     style={{ width: 60, height: 30, top: -10, left: -15, borderWidth: 1,borderColor: "white", backgroundColor: '#ce1d1d' }}
                     onPress={() =>{
                         if(this.state.token == null){
@@ -85,7 +86,7 @@ export default class following extends Component {
                     <FlatList
                         data={this.state.following}
                         renderItem={({ item, index }) =>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('')}>
+                            <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('')}>
 
                                 <View style={styles.item}> 
                                     <Text style={{color:"white", fontSize: 20}} >{item.family_name}</Text>           
