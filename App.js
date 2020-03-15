@@ -3,16 +3,22 @@ import { Image, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { createAppContainer, createSwitchNavigator} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+
+
 import HomeScreen from './screens/homescreen.js';
 import Serach from './screens/serach.js';
 import LoginPage from './screens/loginPage.js';
-
 import signedinhome from './screens/loggedHomeScreen.js';
 import AccountScreen from './screens/accountpage.js';
 import MakeChitScreen from './screens/MakeChit.js';
-
+import cameraPageChit from './screens/cameraPageChit.js'
 import DraftsScreen from './screens/drafts.js';
 import loggedInAcountScreen from './screens/loggedInAcountScreen.js'; 
+import editAccountScreen from './screens/editAccountPage.js';
+import FollowingScreen from './screens/following.js'
+import FollowersScreen from './screens/followers.js'
+import cameraPage from './screens/cameraPage.js'
+
 
 import { Icon } from 'native-base';
 import accountpage from './screens/accountpage.js';
@@ -22,6 +28,7 @@ const AppStackNav = createBottomTabNavigator( {
     Home: {
         screen: HomeScreen,
         navigationOptions: {
+            tabBarLabel:".",
             tabBarIcon: () => (
                 <Image
                     source={require('./home.png')}
@@ -39,7 +46,7 @@ const AppStackNav = createBottomTabNavigator( {
         tabBarLabel: "serach",
         tabBarLabel: () => 
         <Image
-            source={require('./SeekPng.com_magnifying-glass-png-no_659285.png')}
+            source={require('./585e4ad1cb11b227491c3391.png')}
             style={{
                 //backgroundColor: 'white',
                 width: 24,
@@ -85,10 +92,10 @@ const AppStackNavSignedin = createBottomTabNavigator( {
 
         screen: signedinhome,
         navigationOptions: {
-            tabBarLabel: "Home Page",
+            tabBarLabel: ".",
             tabBarIcon: () => (
                 <Image
-                    source={require('./home.jpg')}
+                    source={require('./home.png')}
                     style={
                         styles.icon
                     }
@@ -101,21 +108,89 @@ const AppStackNavSignedin = createBottomTabNavigator( {
     LoggedInAccountScreen: {
         screen: loggedInAcountScreen,
         tabBarLabel: "account screen",
+        navigationOptions: {
+            tabBarLabel: ".",
+            tabBarIcon: () => (
+                <Image
+                    source={require('./loginIcon.png')}
+                    style={
+                        styles.icon
+                    }
+
+                    name="home"
+                />
+            )
+        }
         
         
     },
     serach: {
         screen: Serach,
-        tabBarLabel: "serach"
+        tabBarLabel: "serach",
+        navigationOptions: {
+
+            tabBarLabel: false,
+            tabBarLabel: () => 
+            <Image
+                source={require('./585e4ad1cb11b227491c3391.png')}
+                style={{
+                    //backgroundColor: 'white',
+                    width: 24,
+                    top: -20,
+                    left: 27,
+                    height: 24,
+                }
+                   
+                }
+                name="name"
+            />
+            }
         
     }, 
     MakeChitScreen: {
         screen: MakeChitScreen,
-        tabBarLabel: "make chit"
-    }, 
+        tabBarLabel: "make chit",
+        navigationOptions: {
+            tabBarLabel: false,
+            tabBarLabel: () => 
+            <Image
+                source={require('./Iconsss-01.png')}
+                style={{
+                    backgroundColor: 'transparent',
+                    width: 24,
+                    top: -20,
+                    left: 40,
+                    height: 24,
+                }
+                   
+                }
+                name="name"
+            />
+            }
+        
+    
+    },
     drafts: {
         screen: DraftsScreen, 
-        tabBarLabel: "drafts"
+        tabBarLabel: "drafts",
+        navigationOptions: {
+            tabBarLabel: "chit",
+            tabBarLabel: () => 
+            <Image
+                source={require('./Iconsss-02.png')}
+                style={{
+                    backgroundColor: 'transparent',
+                    width: 24,
+                    top: -20,
+                    left: 30,
+                    height: 24,
+                }
+                   
+                }
+                name="name"
+            />
+            }
+
     }
 
 });
@@ -142,7 +217,9 @@ const App = createSwitchNavigator(
     {
         App: AppStackNav,
         Auth: AppStackNavSignedin,
-        AccountScreen, accountpage
+        AccountScreen, accountpage,
+        editAccountScreen, FollowingScreen,
+        FollowersScreen,cameraPage,cameraPageChit
     },
     {
         initialRouteName: 'App',

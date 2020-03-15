@@ -20,10 +20,11 @@ class HomeScreen extends Component {
             longitude: 0,
             latitude: 0,
             user_id: 0,
-            given_name: '',
-            family_name: '',
-            email: '', 
-            outside: null
+            given_name:'',
+            family_name:'',
+            email:'', 
+            outside: null,
+            photo: []
             }
         }
 
@@ -102,7 +103,7 @@ class HomeScreen extends Component {
                                     width: 40,
                                     height: 40 ,
                                 }}
-                                source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+item.user.user_id+'/photo'}}
+                                source={{uri:  `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`}}
                                 name="login"
                             />
                         </Text>

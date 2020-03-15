@@ -6,16 +6,13 @@ import {
     Image,
     AsyncStorage,
     FlatList, 
-    TouchableOpacity,
-    Alert
+    Alert,
+    TouchableOpacity
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 import { Button } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { object } from 'prop-types';
-
-
-
 
 export default class Profile extends Component {
 
@@ -25,54 +22,57 @@ export default class Profile extends Component {
         this.state = {
             isLoading: true,
             UserData: [],
-            user_id: '',
-            given_name: '',
-            family_name: '',
-            email: '',
+            user_id:'',
+            given_name:'',
+            family_name:'',
+            email:'',
             recent_chits: [],
             chit_id: 0,
             timestamp: 0,
-            chit_content: '',
+            chit_content:'',
             location: {},
             longitude: 0,
             latitude: 0,
-            token: '',
-            listOfFollowing:[],
-            listOfFollowers:[], 
-            loggedInUSerID: '', 
-            followButtonText: 'follow', 
-            userPicUri: ''
+            following: [],
+            followers:[],
+            userPicUri:''
         }
     }
 
 
     getUserID = async () => {
-        const response = await AsyncStorage.getItem('UserID');
-        const Token = await AsyncStorage.getItem('LoginToken')
-        const loggedUSERID = await AsyncStorage.getItem('LoginUserID')
+        const response = await AsyncStorage.getItem('LoginUserID');
 
         this.setState({
             user_id: response,
-            token: Token, 
-            loggedInUSerID: loggedUSERID,
             userPicUri: `http://10.0.2.2:3333/api/v0.0.5/user/${response}"/photo`
         })
 
-        this.getUserDetails();
-        this.getfollowing();
-        this.getfollowers().then(()=>{
-            if(this.isfollowing(this.state.listOfFollowers)){
-                this.setState({
-                    followButtonText: 'unfollow'
-                })
-            }
-        })
-
         
-        console.log("here from account page", response);
+        this.getUserDetails()
+        this.getfollowing()
+        this.getfollowers()
+        this.getUserImage()
+        console.log("here from account page", response)
 
     }
 
+
+    logout(){
+        return  fetch("http://10.0.2.2:3333/api/v0.0.5/logout",{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((response) =>{
+                Alert.alert("logged out");
+                console.log("here", response);
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+    }
+    
     getUserDetails() {
         return fetch("http://10.0.2.2:3333/api/v0.0.5/user/" + this.state.user_id)
             .then((response) => response.json())
@@ -81,15 +81,26 @@ export default class Profile extends Component {
                     isLoading: false,
                     UserData: responseJson,
                 });
-                /*
-                this can be use to debug and thus has been left here for future use
-                console.log((this.state.UserData.recent_chits))
-                */
+                //console.log((this.state.UserData.recent_chits))
             })
             .catch((error) => {
                 console.log(error);
             });
     }
+
+
+    getUserImage(){
+        return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/photo")
+        .then((response) =>{
+            this.setState({
+                userProfilePic: response.url
+            })
+            console.log("image data", response.url)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    } 
 
     getfollowing(){
         return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/following")
@@ -97,7 +108,7 @@ export default class Profile extends Component {
         .then((responseJson) => {
             this.setState({
                 isLoading: false,
-                listOfFollowing: responseJson,
+                following: responseJson,
             });
             console.log("following", this.state.listOfFollowing)
         })
@@ -110,105 +121,44 @@ export default class Profile extends Component {
         return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/followers")
         .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({  
+            this.setState({
                 isLoading: false,
-                listOfFollowers: responseJson,
+                followers: responseJson,
             });
             console.log(this.state.listOfFollowers)
         })
         .catch((error) => {
-                     
             console.log(error);
         });
     }
 
     followersLength(){
-        console.log(this.state.listOfFollowers.length);
-        
-        
-        return this.state.listOfFollowers.length;
+        console.log(this.state.followers.length)
+        return this.state.followers.length
     }
 
     followingLength(){
-        console.log("following", this.state.listOfFollowing.length) ;
-
-        return this.state.listOfFollowing.length; 
-
+        console.log("following", this.state.following.length)
+        return this.state.following.length 
     }
-
-    isfollowing(followers){
-        const loggedInUSerID =this.state.loggedInUSerID
-        const following = false;
-
-        followers.map((item, index) =>{
-            if(loggedInUSerID === item.user_id) {
-                console.log("already following");
-                following = true;
-            }  
-        });
-        return following
-    }
-    
-    follow(){
-        if(this.state.token !=null){
-            console.log("has run")
-           return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/follow",
-            {
-                method: 'POST',
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Authorization': this.state.token,
-                },
-                body: JSON.stringify({
-                    user_id: this.state.user_id
-                })
-            })
-            .then((response) => {
-                if(response.ok){
-                    Alert.alert("followed")
-                }else{
-                    Alert.alert("something went wrong you may already be following this person?")
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-            
-        }else{
-            Alert.alert("you must be logged in to follow someone")
-        }
-    }
-
-    unfollow(){
-        console.log("un follow start")
-           return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/follow",
-            {
-                method: 'DELETE',
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Authorization': this.state.token,
-                },
-                body: JSON.stringify({
-                    user_id: this.state.user_id
-                })
-            })
-            .then((response) => {
-                if(response.ok){
-                    Alert.alert("unfollowed");
-                }else{
-                    Alert.alert("oh dear you cannnot unfollow this person D: maybe you are not logged in?");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
 
     clearAsync = async() =>{
-        AsyncStorage.removeItem('Token');
+        AsyncStorage.removeItem('LoginToken');
+    }
+
+    getchitImage(){
+        return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+ this.state.user_id+"/photo")
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({
+                isLoading: false,
+                UserData: responseJson,
+            });
+            //console.log((this.state.UserData.recent_chits))
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
 
@@ -221,27 +171,23 @@ export default class Profile extends Component {
         return (
 
             <View style={styles.container}>
-                <Button style={styles.buttonContainer}  onPress={() =>{
+                <Button style={styles.buttonContainer} onPress={() =>{
                         console.log("pressed"),
-                        this.clearAsync().then(() =>{
-                            if(this.state.token === null){
-                                this.props.navigation.navigate('Home');
-                            }else{
-                                this.props.navigation.navigate('signedinhome');
-                            }
-                                
+                        this.logout()
+                        this.clearAsync().then(() =>{     
+                            this.props.navigation.navigate('Home');    
                         })
                     } 
                 }>
-                    <Text>home</Text>
+                <Text>log out</Text>
                 </Button>
                 <View style={styles.header}>
+                    
                 <Image source={{
                     uri: this.state.userPicUri +'?' + Date.now(),
                  }}
                  style={styles.avatar} 
-                /> 
-                    
+                />                    
                     <Text style={styles.name}>{this.state.UserData.family_name}</Text>
                     <Text style={styles.accountname}>{this.state.UserData.given_name}</Text>
 
@@ -252,23 +198,22 @@ export default class Profile extends Component {
                    <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
                     <Text style={{color:"white"}} >following {this.followingLength()}</Text>
                     </TouchableOpacity>
+                    
+                    
+                    <TouchableOpacity onPress={()=>{
+                        this.props.navigation.navigate('editAccountScreen')
+                    }} style={styles.Edit} >
+                        <Text style={{textAlign: "center", top:10, color: "white", fontSize:20}}>edit</Text>    
+                    </TouchableOpacity>
+
                 </View>
                 
                 <View style={{top: 0}}>
                   <Image style={styles.backgroundImage} source={require('./cool-banners-25-cute-girly-cool-twitter-header-banners-pictures.jpg')}/>
                 </View>
                 
-                <TouchableOpacity onPress={()=>{
-                    if(this.isfollowing(this.state.listOfFollowers)){
-                        this.unfollow()
-                    }else{
-                        this.follow()
-                    }}} style={styles.follow}>
-                        <Text style={{textAlign: "center", top:10, color: "white", fontSize:18}}>{this.state.followButtonText}</Text>    
-                </TouchableOpacity>
-
                 <View>
-                  <Text style={{fontFamily:'Freight Sans', fontSize: 25, textAlign:"center", top:-25}} >chits</Text>
+                  <Text style={{fontFamily:'Freight Sans', fontSize: 25, textAlign:"center"}} >chits</Text>
                 </View>
                 
                 <ScrollView style={{backgroundColor: "#1b2836", height: 500}}>
@@ -286,6 +231,7 @@ export default class Profile extends Component {
                             
                             onPress={() => this.props.navigation.navigate('')}>
                                 <Text style={{color: "white",  fontFamily:'Freight Sans'}}>{item.chit_content}</Text>
+                            
                             </TouchableOpacity>}
                         keyExtractor={({ id }, index) => id}
                     />
@@ -305,8 +251,6 @@ const styles = StyleSheet.create({
         height: 240,
 
     },
-
-
     ScrollviewCont: {
       flex: 1,
       height: 1000,
@@ -319,18 +263,19 @@ const styles = StyleSheet.create({
       //borderBottomWidth: 1,
       flexDirection: "column",
       backgroundColor: "#1b2836"
-  },
-  follow:{
-    left: 320,
-    top: -90,
-    width: 80,
-    backgroundColor:"#1b2836", 
-    height: 50,
-    borderWidth: 2,
-    borderColor: "white"
-     
-},
-
+    },
+    
+    Edit:{
+        left: 325,
+        top: 150,
+        width: 50,
+        position: "absolute",
+        backgroundColor:"#1b2836", 
+        height: 50,
+        borderWidth: 2,
+        borderColor: "white"
+         
+    },
     
     avatar: {
         width: 130,
@@ -343,6 +288,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         marginTop: 10
     },
+
+    chit_photo:{
+        width: 100,
+        height: 100,
+        borderWidth: 4,
+        borderColor: "black",
+        marginBottom: 0,
+        backgroundColor:"red",
+        alignSelf: 'center',
+        position: 'absolute',
+        marginTop: 0
+    },
+
 
     backgroundImage:{
       backgroundColor: "transparent",

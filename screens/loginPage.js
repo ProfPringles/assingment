@@ -18,17 +18,17 @@ class Loginpage extends Component {
         this.state = {
             data: [],
             authorized: false,
-            email: '',
-            password: '',
-            id: '',
-            token: '',
+            email:'',
+            password:'',
+            id:'',
+            token:'',
 
         }
     }
 
     ExpireDate() {
         const now = new Date();
-        let expireTime = new Date(now);
+        const expireTime = new Date(now);
         expireTime.setMinutes(now.getMinutes() + 0.10);
         
         if(now > expireTime){
@@ -72,18 +72,18 @@ class Loginpage extends Component {
 
     checkAuth  = async() =>{
         try{
-            AsyncStorage.setItem('Token', JSON.stringify(this.state.data.token))
-            AsyncStorage.setItem('UserID', JSON.stringify(this.state.data.id))
+            AsyncStorage.setItem('LoginToken', this.state.data.token)
+            AsyncStorage.setItem('LoginUserID', JSON.stringify(this.state.data.id))
 
             console.log(JSON.stringify(JSON.stringify(this.state.data.id)))        
         }catch(error){
             console.log(error)
         }
         
-        var token = await AsyncStorage.getItem('Token')
-        var id = await AsyncStorage.getItem('UserID')
+        const token = await AsyncStorage.getItem('LoginToken')
+        const id = await AsyncStorage.getItem('LoginUserID')
 
-        if(token !=null &token !=""){
+        if(token !==null){
                 this.props.navigation.navigate('signedinhome')
         }
         console.log("token: " +token)
@@ -98,7 +98,6 @@ class Loginpage extends Component {
                 <ActivityIndicator/>
             </View>
         }
-        //this.ExpireDate()
         return (
             
             <KeyboardAvoidingView style={styles.wrapper} behavior="padding">

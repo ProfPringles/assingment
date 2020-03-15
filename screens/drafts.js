@@ -8,14 +8,14 @@ class DraftsPage extends Component {
         super(props)
         
         this.state={
-            savedChit: "", 
+            savedChit:'', 
             allchits: []  
         } 
     }
 
 
     getChits = async()=>{
-        var allchits = []
+        const allchits = []
         AsyncStorage.getItem('ChitContent', (error, result) => {
             this.setState({ 
                 savedChit: result 
@@ -23,13 +23,9 @@ class DraftsPage extends Component {
             });
         });
     }
-
-
     componentDidMount() {
         this.getChits()
     }
-       
-    
     render() {
         return (
             <View>

@@ -4,7 +4,7 @@ import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, 
 import { ScrollView } from 'react-native-gesture-handler';
 import { isFunctionExpression } from 'typescript';
 import ImagePicker from 'react-native-image-picker';
-
+import Geolocation from 'react-native-geolocation-service';
 const options = {
     title: 'open images',
     storageOptions: {
@@ -22,27 +22,51 @@ class MakeChit extends Component {
             this.state = {
                 UserData: [],
                 dataReceived: [],
-                email: '',
+                email:'',
                 isLoading: true,
                 user_id: 0,
-                given_name: '',
-                family_name: '',
+                given_name:'',
+                family_name:'',
                 chit_id: 0,
                 timestamp: 0,
-                chit_content: '',
-                location: {},
+                chit_content:'',
+                location:{},
                 longitude: 0,
                 latitude: 0, 
-                token: '', 
-                photo: '', 
-                photoToSend: null            
+                token:'', 
+                photo:'', 
+                photoData: null,      
+                filename:''      
     
             }
         }
 
-        imagePicker = () =>{
+
+        findCoordinates = async() => {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    this.setState({
+                         longitude: position.coords.longitude,
+                         latitude: position.coords.longitude,
+                         timestamp: position.timestamp
+
+                    });
+                console.log("here", this.state.longitude, this.state.latitude, this.state.timestamp)
+                this.PostChit(this.state.timestamp, this.state.longitude, this.state.latitude)
+                },
+             (error) => {
+                    console.log(error)
+                },
+                {
+                enableHighAccuracy: true,
+                timeout: 20000,
+                maximumAge: 1000
+            });
+        };
+
+        /*imagePicker = () =>{
             ImagePicker.showImagePicker(options, (response) => {
-                console.log('Response = ', response);
+                //console.log('Response = ', response);
               
                 if (response.didCancel) {
                   console.log('cancelled');
@@ -54,28 +78,30 @@ class MakeChit extends Component {
                     console.log(response.uri)
                     console.log("content type:", response.uri)
                   this.setState({
-                    photoToSend: response,
-                    photo: response.uri 
+                    photoData: response.data,
+                    photo: response.uri, 
+                    filename: response.fileName,
+                    latitude: response.latitude,
+                    longitude:response.longitude,
+                    timestamp:response.timestamp
                   });
                   console.log(JSON.stringify(this.state.photo))
                 }
               });
-        }
+        }*/
 
 
         getUserIDToken = async () => {
-            let UserID = await AsyncStorage.getItem('UserID');
-            let Token = await AsyncStorage.getItem('Token')
+            const UserID = await AsyncStorage.getItem('LoginUserID');
+            const Token = await AsyncStorage.getItem('LoginToken')
             this.setState({
                 user_id: UserID,
                 token: Token 
             })
-    
-            
             this.getUserDetails()
             
-            console.log("here from make chit page", JSON.stringify(UserID), "token: " , Token)
-    
+            console.log("here from make chit page", this.state, "token: " , Token)
+            console.log(this.state.photoData)
         }
 
 
@@ -111,24 +137,22 @@ class MakeChit extends Component {
                 });
         }
 
-        PostChit() {
-            var authheader =this.state.token+" "
-            var auth =  authheader.replace(/"/g,"'")
-            console.log(auth)
+        PostChit(timestamp, longitude, latitude) {
+            console.log(this.state.token)
 
             if(!this.state.photo){
             return  fetch("http://10.0.2.2:3333/api/v0.0.5/chits",{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Authorization': 'aa18f74f43c54678b5ab12df8e3595a0'
+                    'X-Authorization': this.state.token
                 },
                 body: JSON.stringify({
                         chit_id: this.state.chit_id, 
-                        timestamp: this.state.timestamp, 
+                        timestamp: timestamp, 
                         chit_content: this.state.chit_content,
-                        longitude: this.state.longitude , 
-                        latitude: this.state.latitude,
+                        longitude: longitude , 
+                        latitude: latitude,
                         user_id: this.state.UserData.user_id,
                         given_name: this.state.UserData.given_name, 
                         family_name: this.state.UserData.family_name,
@@ -139,38 +163,32 @@ class MakeChit extends Component {
                 console.log("here", responseJson)
             })
             .catch((error) => {
-                console.log(error)
+                console.log("error", error)
             });
         }else{
-            console.log("here now")
+            console.log("posting image chit")
             return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+this.state.user_id+"/photo", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'image/jpeg',
-                    'X-Authorization': 'aa120e3567cf87ff34f8a228f121f9fb'
+                    'X-Authorization': this.state.token
                 },
-                body: {
-                    file: encodeURIComponent(this.state.photo)
-                    }
-                }).then(response => response.json())
-                  .then((responseJson)=> {
-                    console.log("image uloaded ", responseJson)
-                  }).catch(console.log)
+                body: this.state.photoData
+                }).then((response) =>{
+                    console.log("image uploaded " + response.json())
+                }).catch((error) =>{
+                    console.log(error)
+                })
             }
         }
-
-
-
         WordCount(str) { 
-            let charslength = str.split("").length
-            if(charslength == 147){
+            const charslength = str.split("").length
+            if(charslength === 147){
                 return Alert.alert("chit cannot be over 147 characters, that's not what's going on :(.")
             }else{
                 return charslength    
             }
           }
-
-
         componentDidMount() {
             this.getUserIDToken()
         }
@@ -189,13 +207,12 @@ class MakeChit extends Component {
                 
                 </TextInput>
 
-
                 <Text style={{fontSize: 20,  flex: 1, color: "white", padding: 10, top: 550, position: "absolute"}} >
                     letters: {this.WordCount(this.state.chit_content)}
                 </Text>
                 <TouchableOpacity style={styles.postChit}
                     onPress={() =>
-                        this.PostChit().then(() => {
+                        this.findCoordinates().then(() => {
                             this.saveChit()
                         })
                     }
@@ -215,7 +232,8 @@ class MakeChit extends Component {
 
 
                 <TouchableOpacity style={styles.Images}
-                    onPress={this.imagePicker}>
+                    onPress={() =>{this.props.navigation.navigate('cameraPageChit')}}
+                    >
                     <Text style={styles.postChitText}>
                         upload image
                     </Text>
@@ -226,10 +244,7 @@ class MakeChit extends Component {
                      style={{width: 300, height: 300}}
                     />
                 </View>
-            </View>
-
-            
-            
+            </View>  
         );
     }
 }

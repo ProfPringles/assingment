@@ -12,10 +12,10 @@ class SerchPage extends Component {
             isLoading: true,
             UserData: [],
             user_id: 0,
-            given_name: '',
-            family_name: '',
-            email: '',
-            serach: ''
+            given_name:'',
+            family_name:'',
+            email:'',
+            serach:''
         }
     }
 
