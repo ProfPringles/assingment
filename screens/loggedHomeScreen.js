@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, Modal, TextBase } from 'react-native';
 
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import ImageViewer from 'react-native-image-zoom-viewer';
 class HomeScreen extends Component {
 
     constructor(props) {
@@ -43,7 +44,11 @@ class HomeScreen extends Component {
             .catch((error) => {
                 console.log(error);
             });
-    }    
+    }  
+    
+    getImageChit(){
+        
+    }
 
     
     componentDidMount() {
@@ -66,7 +71,9 @@ class HomeScreen extends Component {
                     data={this.state.chitData}
                     renderItem={({ item, index }) =>
                         <TouchableOpacity accessible={true} style={
-                            { padding: 10, flex: 1, 
+                            { padding: 10, 
+                                flex: 1,
+                                height: 150, 
                               borderBottomColor: "black", 
                               borderBottomWidth: 1,
                               flexDirection:"column",
@@ -75,7 +82,16 @@ class HomeScreen extends Component {
                               onPress={() => this.props.navigation.navigate('serach')}>
                             
                             <View style={styles.item}> 
-                            
+
+                            <Image  style={{
+                                //backgroundColor: "red",
+                                position:"absolute",
+                                top: 0,
+                                left: 200,
+                                width:150,
+                                height: 125,
+
+                            }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.chit_id}/photo`}}/>
                             <Text style={styles.NameTittle}>
                                 {Object.values(item.user.given_name) }
                                 {":"}
@@ -106,8 +122,16 @@ class HomeScreen extends Component {
                                 source={{uri:  `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`}}
                                 name="login"
                             />
+                            
                         </Text>
-
+                        <TouchableOpacity style={{ top: 34, left: 240}}>
+                                    <Image style={{backgroundColor: 'transparent',
+                                            width: 30,
+                                            top: 0,
+                                            left: 30,
+                                            height: 30,}} 
+                    source={require('./iconfinder_JD-07_2246820.png')} />
+                            </TouchableOpacity>
                         <Text style={styles.chit_content}>
                                      {item.chit_content}
                                 </Text>

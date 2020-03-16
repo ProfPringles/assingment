@@ -136,10 +136,10 @@ export default class Profile extends Component {
 
     isfollowing(followers){
         const loggedInUSerID =this.state.loggedInUSerID
-        const following = false;
+        let following = false;
 
         followers.map((item, index) =>{
-            if(loggedInUSerID === item.user_id) {
+            if(loggedInUSerID == item.user_id) {
                 console.log("already following");
                 following = true;
             }  

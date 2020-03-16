@@ -4,6 +4,8 @@ import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Ale
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { Modal } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 class HomeScreen extends Component {
 
@@ -88,6 +90,7 @@ class HomeScreen extends Component {
                     renderItem={({ item, index }) =>
                         <TouchableOpacity style={
                             { padding: 10, flex: 1, 
+                              height: 150,
                               borderBottomColor: "black", 
                               borderBottomWidth: 1,
                               flexDirection:"column",
@@ -99,10 +102,10 @@ class HomeScreen extends Component {
                             <Image style={{
                                 //backgroundColor: "red",
                                 position:"absolute",
+                                top: 0,
                                 left: 200,
-                                width:100,
-                                height: 100,
-                                resizeMode : 'stretch'
+                                width:150,
+                                height: 125,
                             }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.chit_id}/photo`}}/>    
                             
                             <Text style={styles.NameTittle}>
@@ -121,7 +124,6 @@ class HomeScreen extends Component {
                                 //backgroundColor: 'grey',
 
                             }}>
-                                
                             
                             <Image 
                                 style={{

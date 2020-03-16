@@ -64,7 +64,7 @@ class MakeChit extends Component {
             });
         };
 
-        imagePicker = () =>{
+        /*imagePicker = () =>{
             ImagePicker.showImagePicker(options, (response) => {
                 //console.log('Response = ', response);
               
@@ -88,15 +88,16 @@ class MakeChit extends Component {
                   console.log(JSON.stringify(this.state.photo))
                 }
               });
-        }
+        }*/
 
 
         getUserIDToken = async () => {
             const UserID = await AsyncStorage.getItem('LoginUserID');
-            const Token = await AsyncStorage.getItem('LoginToken')
+            const Token = await AsyncStorage.getItem('LoginToken');
             this.setState({
                 user_id: UserID,
-                token: Token 
+                token: Token,
+                
             })
             this.getUserDetails()
             
@@ -140,7 +141,6 @@ class MakeChit extends Component {
         PostChit(timestamp, longitude, latitude) {
             console.log(longitude)
             console.log(this.state.token)
-            if(!this.state.photo){
                 if(this.state.chit_content === '' || this.state.chit_content === ""){
                     Alert.alert("chit must contain atleast one letter :)")
                 }else {
@@ -164,34 +164,30 @@ class MakeChit extends Component {
                     }).then((response) => response.json())
                     .then((responseJson)=> {
                         console.log("here", responseJson.chit_id)
+                        this.savechitID(responseJson.chit_id)
                         this.setState({
                             chit_id: responseJson.chit_id
                         })
+                        
                     })
                     .catch((error) => {
                         console.log("error", error)
                     });
-                
-                    }
-                }else{
-                    console.log(this.state.photoData)
-                    console.log(this.state.chit_id)
-                    
-                    return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+this.state.chit_id+"/photo", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'image/jpeg',
-                            'X-Authorization': this.state.token
-                        },
-                        body: this.state.photoData
-                        }).then((response) =>{
-                            console.log("image uploaded " + response.json())
-                        }).catch((error) =>{
-                            console.log(error)
-                        })
-                 }
-        }
+                }
+        } 
 
+        savechitID = async(chitid) =>{
+            await AsyncStorage.setItem('chitID', JSON.stringify(chitid))
+            await AsyncStorage.setItem('timestamp', this.state.timestamp) 
+            await AsyncStorage.setItem('chit_content', this.state.chit_content)
+            await AsyncStorage.setItem('user_id',mthis.state.UserData.user_id) 
+            await AsyncStorage.setItem('given_name',this.state.UserData.given_name)  
+            await AsyncStorage.setItem('family_name', this.state.UserData.family_name) 
+            await AsyncStorage.setItem('email', this.state.UserData.email) 
+            await AsyncStorage.setItem('longitude',this.state.longitude)  
+            await AsyncStorage.setItem('latiude',this.state.latitude) 
+            console.log(chitid)
+        }
         WordCount(str) { 
             const charslength = str.split("").length
             if(charslength === 147){
@@ -243,7 +239,7 @@ class MakeChit extends Component {
 
 
                 <TouchableOpacity style={styles.Images}
-                    onPress={() =>{this.imagePicker()}}
+                    onPress={() =>{this.props.navigation.navigate('cameraPageChit')}}
                     >
                     <Text style={styles.postChitText}>
                         upload image
