@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox, TextComponent } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SearchBar } from 'react-native-elements';
 
 class SerchPage extends Component {
@@ -23,7 +22,7 @@ class SerchPage extends Component {
     
     getuser= () =>
     {
-        return fetch("http://10.0.2.2:3333/api/v0.0.5/search_user?q="+this.state.serach)
+        return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user?q='+this.state.serach)
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({

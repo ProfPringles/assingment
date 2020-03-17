@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import { ScrollView } from 'react-native-gesture-handler';
-import { isFunctionExpression } from 'typescript';
 import ImagePicker from 'react-native-image-picker';
 import Geolocation from 'react-native-geolocation-service';
 const options = {
@@ -178,14 +177,6 @@ class MakeChit extends Component {
 
         savechitID = async(chitid) =>{
             await AsyncStorage.setItem('chitID', JSON.stringify(chitid))
-            await AsyncStorage.setItem('timestamp', this.state.timestamp) 
-            await AsyncStorage.setItem('chit_content', this.state.chit_content)
-            await AsyncStorage.setItem('user_id',mthis.state.UserData.user_id) 
-            await AsyncStorage.setItem('given_name',this.state.UserData.given_name)  
-            await AsyncStorage.setItem('family_name', this.state.UserData.family_name) 
-            await AsyncStorage.setItem('email', this.state.UserData.email) 
-            await AsyncStorage.setItem('longitude',this.state.longitude)  
-            await AsyncStorage.setItem('latiude',this.state.latitude) 
             console.log(chitid)
         }
         WordCount(str) { 

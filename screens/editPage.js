@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 
 class  editPage extends Component {

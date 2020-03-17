@@ -4,8 +4,6 @@ import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Ale
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { Modal } from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
 
 class HomeScreen extends Component {
 
