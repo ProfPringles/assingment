@@ -5,7 +5,6 @@ export default class signupPage extends Component{
   
   constructor(props){
     super(props)
-
     this.state = {
       given_name: '',
       family_name:'',
@@ -27,19 +26,18 @@ export default class signupPage extends Component{
             })
         }).then((response) => {
             if(response.ok){
-              Alert.alert("you have created an account! Welcome to chittr")
+              Alert.alert("you have created an account! Welcome to chittr");
             }else{
-              Alert.alert("you did not fill in all areas :(")
+              Alert.alert("you did not fill in all areas :(");
             }
-            console.log("here", responseJson)
+            console.log("here", responseJson);
         })
         .catch((error) => {
-            console.log("error", error)
+            console.log("error", error);
         });
   }
 
   render(){
-
     return(
       <View style={styles.container} >
           <Button style={styles.back}

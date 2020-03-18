@@ -17,7 +17,6 @@ class MakeChit extends Component {
 
         constructor(props) {
             super(props);
-    
             this.state = {
                 UserData: [],
                 dataReceived: [],
@@ -39,8 +38,33 @@ class MakeChit extends Component {
     
             }
         }
+    requestLocationPermission = async() =>{
+        try {
+            const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+                title: 'chittr',
+                message:
+                    'do you want to tag your chit with your location? if you press yes then you cannot untag your location.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'no',
+                buttonPositive: 'yes',
+                },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('You can access location');
+                return true;
+                } else {
+                    console.log('Location permission denied');
+                    return false;
+                }
+        } catch (err) {
+            console.warn(err);
+        }
+    }
+      
 
-
+        //find the current loction of the user to be used in the chit
         findCoordinates = async() => {
             Geolocation.getCurrentPosition(
                 (position) => {
@@ -50,11 +74,11 @@ class MakeChit extends Component {
                          timestamp: position.timestamp
 
                     });
-                console.log("here", this.state.longitude, this.state.latitude, this.state.timestamp)
-                this.PostChit(this.state.timestamp, this.state.longitude, this.state.latitude)
+                console.log("location", this.state.longitude, this.state.latitude, this.state.timestamp);
+                this.PostChit(this.state.timestamp, this.state.longitude, this.state.latitude);
                 },
              (error) => {
-                    console.log(error)
+                    console.log(error);
                 },
                 {
                 enableHighAccuracy: true,
@@ -63,48 +87,19 @@ class MakeChit extends Component {
             });
         };
 
-        /*imagePicker = () =>{
-            ImagePicker.showImagePicker(options, (response) => {
-                //console.log('Response = ', response);
-              
-                if (response.didCancel) {
-                  console.log('cancelled');
-                } else if (response.error) {
-                  console.log('Error: ');
-                } else if (response.customButton) {
-                  console.log('custom button: ');
-                } else {
-                    console.log(response.uri)
-                    console.log("content type:", response.uri)
-                  this.setState({
-                    photoData: response.data,
-                    photo: response.uri, 
-                    filename: response.fileName,
-                    latitude: response.latitude,
-                    longitude:response.longitude,
-                    timestamp:response.timestamp
-                  });
-                  console.log(JSON.stringify(this.state.photo))
-                }
-              });
-        }*/
-
-
         getUserIDToken = async () => {
             const UserID = await AsyncStorage.getItem('LoginUserID');
             const Token = await AsyncStorage.getItem('LoginToken');
             this.setState({
                 user_id: UserID,
                 token: Token,
-                
             })
-            this.getUserDetails()
-            
-            console.log("here from make chit page", this.state, "token: " , Token)
-            console.log(this.state.photoData)
+            this.getUserDetails()    
+            console.log("here from make chit page", this.state, "token: " , Token);
+            console.log(this.state.photoData);
         }
 
-
+        //save the chit content for the drafts page
         saveChit = async()=>{
             Alert.alert(
                 'do you want to save that chit?',
@@ -121,7 +116,7 @@ class MakeChit extends Component {
                 {cancelable: false},
             );
         }
-
+        //get the user details to make sure chit can be posted to the right account
         getUserDetails() {
             return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id)
                 .then((response) => response.json())
@@ -130,7 +125,7 @@ class MakeChit extends Component {
                         isLoading: false,
                         UserData: responseJson,
                     });
-                    console.log("email: ", this.state.UserData.family_name)
+                    console.log("email: ", this.state.UserData.family_name);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -140,6 +135,12 @@ class MakeChit extends Component {
         PostChit(timestamp, longitude, latitude) {
             console.log(longitude)
             console.log(this.state.token)
+            /*
+            the operator is used so that if the user does not allow the 
+            app to use their location it sets the longitude and latiude to 0. 
+
+            make sure the chit content is not less than one word so that user cannot post an empty chit
+            */
                 if(this.state.chit_content === '' || this.state.chit_content === ""){
                     Alert.alert("chit must contain atleast one letter :)")
                 }else {
@@ -157,28 +158,34 @@ class MakeChit extends Component {
                             given_name: this.state.UserData.given_name, 
                             family_name: this.state.UserData.family_name,
                             email: this.state.UserData.email,
-                            longitude: longitude , 
-                            latitude: latitude,
+                            location:{
+                                longitude: longitude !=null ? longitude: 0 , 
+                                latitude: latitude !=null ? longitude: 0,
+                            },
                         })
                     }).then((response) => response.json())
                     .then((responseJson)=> {
-                        console.log("here", responseJson.chit_id)
-                        this.savechitID(responseJson.chit_id)
+                        console.log("chit ID", responseJson.chit_id);
+                        this.savechitID(responseJson.chit_id);
                         this.setState({
                             chit_id: responseJson.chit_id
                         })
                         
                     })
                     .catch((error) => {
-                        console.log("error", error)
+                        console.log("error", error);
                     });
                 }
         } 
-
+        //save the chit ID of the chit to be used to post an image to the last chit made
         savechitID = async(chitid) =>{
             await AsyncStorage.setItem('chitID', JSON.stringify(chitid))
             console.log(chitid)
         }
+        /*
+        make sure that when the user types more than 147 chars so that they are alerted and 
+        do not keep typing and get confused when the chit is not posetd
+        */
         WordCount(str) { 
             const charslength = str.split("").length
             if(charslength === 147){
@@ -188,7 +195,8 @@ class MakeChit extends Component {
             }
           }
         componentDidMount() {
-            this.getUserIDToken()
+            this.getUserIDToken();
+            this.requestLocationPermission();
         }
 
     render() {

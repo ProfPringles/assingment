@@ -15,7 +15,6 @@ console.disableYellowBox = true;
 class Loginpage extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             data: [],
             authorized: false,
@@ -23,7 +22,6 @@ class Loginpage extends Component {
             password:'',
             id:'',
             token:'',
-
         }
     }
 
@@ -35,7 +33,6 @@ class Loginpage extends Component {
         if(now > expireTime){
             AsyncStorage.removeItem('Token');
         }
-        
         return expireTime;
     }
 
@@ -46,7 +43,6 @@ class Loginpage extends Component {
             {
                 method: 'POST',
                 headers: {
-                    //Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -67,30 +63,29 @@ class Loginpage extends Component {
     }
 
     componentDidMount() {
-        this.login()
+        this.login();
     }
         
 
     checkAuth  = async() =>{
         try{
-            AsyncStorage.setItem('LoginToken', this.state.data.token)
-            AsyncStorage.setItem('LoginUserID', JSON.stringify(this.state.data.id))
-
-            console.log(JSON.stringify(JSON.stringify(this.state.data.id)))        
+            AsyncStorage.setItem('LoginToken', this.state.data.token);
+            AsyncStorage.setItem('LoginUserID', JSON.stringify(this.state.data.id));
+            console.log(JSON.stringify(JSON.stringify(this.state.data.id)));     
         }catch(error){
             console.log(error)
         }
         
-        const token = await AsyncStorage.getItem('LoginToken')
-        const id = await AsyncStorage.getItem('LoginUserID')
-
+        const token = await AsyncStorage.getItem('LoginToken');
+        const id = await AsyncStorage.getItem('LoginUserID');
+        //if the token is not null then allow the suer to logg in if it is null then alert the user.
         if(token !==null){
                 this.props.navigation.navigate('signedinhome')
         }else{
-            Alert.alert("you have enterted your email or password wrong please try again")
+            Alert.alert("you have enterted your email or password wrong please try again");
         }
-        console.log("token: " +token)
-        console.log("id: " +id)
+        console.log("token: " +token);
+        console.log("id: " +id);
     }
     
  
@@ -177,7 +172,7 @@ class Loginpage extends Component {
                                 textAlign: 'center',
                                 position: "absolute",
                                 borderRadius: 100 / 2,
-                                backgroundColor: 'white',}
+                                backgroundColor: 'white' }
                         }>
                     <Text  style={{
                             left: 70,

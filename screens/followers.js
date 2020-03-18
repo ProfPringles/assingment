@@ -18,7 +18,6 @@ export default class followers extends Component {
 
     constructor(props){
         super(props)
-
         this.state={
             followers:[],   
             email:'', 
@@ -29,7 +28,6 @@ export default class followers extends Component {
             token:''
             }
         }
-
         getUserID = async () => {
             const response = await AsyncStorage.getItem('UserID');
             const loggedinToken = await AsyncStorage.getItem('LoginToken');
@@ -37,8 +35,8 @@ export default class followers extends Component {
                 user_id: response,
                 token: loggedinToken
             })
-            this.getfollowers()
-            console.log("here from account page", response)
+            this.getfollowers();
+            console.log("here from account page", response);
     
         }
         getfollowers(){
@@ -49,7 +47,7 @@ export default class followers extends Component {
                     isLoading: false,
                     followers: responseJson,
                 });
-                console.log(this.state.followers)
+                console.log(this.state.followers);
             })
             .catch((error) => {
                 console.log(error);
@@ -57,7 +55,7 @@ export default class followers extends Component {
         }
 
         componentDidMount() {
-            this.getUserID()
+            this.getUserID();
         }
         render(){
             return(
@@ -65,10 +63,10 @@ export default class followers extends Component {
                     <TouchableOpacity accessible={true}
                         style={{ width: 60, height: 30, top: -10, left: -15, borderWidth: 1,borderColor: "white", backgroundColor: '#ce1d1d' }}
                         onPress={() =>{
-                                if(this.state.token == null){
-                                    this.props.navigation.navigate('accountpage')
+                                if(this.state.token === null){
+                                    this.props.navigation.navigate('accountpage');
                                 }else{
-                                    this.props.navigation.navigate('LoggedInAccountScreen')   
+                                    this.props.navigation.navigate('LoggedInAccountScreen');
                                 }
                                 
                             }

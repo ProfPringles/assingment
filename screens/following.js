@@ -36,10 +36,9 @@ export default class following extends Component {
             this.setState({
                 user_id: response, 
                 token: loggedinToken
-            })
-
+            });
             this.getfollowing()
-            console.log("here from account page", response)
+            console.log("here from account page", response);
     
         }
 
@@ -58,7 +57,7 @@ export default class following extends Component {
             });
         }
         componentDidMount() {
-            this.getUserID()
+            this.getUserID();
         }    
 
         render(){
@@ -72,10 +71,8 @@ export default class following extends Component {
                             this.props.navigation.navigate('accountpage')
                         }else{
                             this.props.navigation.navigate('LoggedInAccountScreen')   
-                        }
-                        
+                        } 
                     }
-                        
                     }>
                     <Text style={{color: "white",  textAlign: "center", top: 3}}>
                          back
@@ -95,11 +92,8 @@ export default class following extends Component {
                         keyExtractor={({ id }, index) => id}
                         />
                 </ScrollView>
-
             </View>
-            
-            );
-            
+        );
     }
 }
 

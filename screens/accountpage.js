@@ -14,14 +14,9 @@ import { Button } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { object } from 'prop-types';
 
-
-
-
 export default class Profile extends Component {
-
     constructor(props) {
         super(props);
-
         this.state = {
             isLoading: true,
             UserData: [],
@@ -44,31 +39,32 @@ export default class Profile extends Component {
             userPicUri: ''
         }
     }
-    getUserID = async () => {
+    /*
+    a user must be able to follow and unfollow someone when they are logged in 
+    if the user if following someone the follow button text changes and that is why I am getting 
+    both userID and LoginUserID and Token
+    */
+    getUserID = async () => {                  
         const response = await AsyncStorage.getItem('UserID');
-        const Token = await AsyncStorage.getItem('LoginToken')
-        const loggedUSERID = await AsyncStorage.getItem('LoginUserID')
-
+        const Token = await AsyncStorage.getItem('LoginToken');
+        const loggedUSERID = await AsyncStorage.getItem('LoginUserID');
         this.setState({
             user_id: response,
             token: Token, 
             loggedInUSerID: loggedUSERID,
             userPicUri: `http://10.0.2.2:3333/api/v0.0.5/user/${response}"/photo`
-        })
-
+        });
+        //get user details gets the user deatils to be shown in the page
         this.getUserDetails();
         this.getfollowing();
         this.getfollowers().then(()=>{
             if(this.isfollowing(this.state.listOfFollowers)){
                 this.setState({
                     followButtonText: 'unfollow'
-                })
+                });
             }
-        })
-
-        
+        });
         console.log("here from account page", response);
-
     }
 
     getUserDetails() {
@@ -97,7 +93,7 @@ export default class Profile extends Component {
                 isLoading: false,
                 listOfFollowing: responseJson,
             });
-            console.log("following", this.state.listOfFollowing)
+            console.log("following", this.state.listOfFollowing);
         })
         .catch((error) => {
             console.log(error);
@@ -112,32 +108,29 @@ export default class Profile extends Component {
                 isLoading: false,
                 listOfFollowers: responseJson,
             });
-            console.log(this.state.listOfFollowers)
+            console.log(this.state.listOfFollowers);
         })
-        .catch((error) => {
-                     
+        .catch((error) => {    
             console.log(error);
         });
     }
 
     followersLength(){
-        console.log(this.state.listOfFollowers.length);
-        
-        
+        console.log(this.state.listOfFollowers.length); 
         return this.state.listOfFollowers.length;
     }
 
     followingLength(){
         console.log("following", this.state.listOfFollowing.length) ;
-
         return this.state.listOfFollowing.length; 
-
     }
-
+    
     isfollowing(followers){
         const loggedInUSerID =this.state.loggedInUSerID
         let following = false;
-
+        /*map the followers json to a javascript array and check if the person is 
+          is already following so that I can change the follow un follow button text   
+        */
         followers.map((item, index) =>{
             if(loggedInUSerID == item.user_id) {
                 console.log("already following");
@@ -146,9 +139,9 @@ export default class Profile extends Component {
         });
         return following
     }
-    
+
     follow(){
-        if(this.state.token !=null){
+        if(this.state.token !==null){
             console.log("has run")
            return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/follow",
             {
@@ -164,9 +157,9 @@ export default class Profile extends Component {
             })
             .then((response) => {
                 if(response.ok){
-                    Alert.alert("followed")
+                    Alert.alert("followed");
                 }else{
-                    Alert.alert("something went wrong you may already be following this person?")
+                    Alert.alert("something went wrong you may already be following this person?");
                 }
             })
             .catch((error) => {
@@ -174,12 +167,12 @@ export default class Profile extends Component {
             });
             
         }else{
-            Alert.alert("you must be logged in to follow someone")
+            Alert.alert("you must be logged in to follow someone");
         }
     }
 
     unfollow(){
-        console.log("un follow start")
+        console.log("un follow start");
            return fetch("http://10.0.2.2:3333/api/v0.0.5/user/"+this.state.user_id+"/follow",
             {
                 method: 'DELETE',
@@ -207,7 +200,7 @@ export default class Profile extends Component {
         AsyncStorage.removeItem('Token');
     }
     componentDidMount() {
-        this.getUserID()
+        this.getUserID();
     }
     render() {
         return (
@@ -238,11 +231,11 @@ export default class Profile extends Component {
                     <Text style={styles.name}>{this.state.UserData.family_name}</Text>
                     <Text style={styles.accountname}>{this.state.UserData.given_name}</Text>
 
-                    <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{padding:5, left: 5, top: 100 }}>
+                    <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{ padding:5, left: 5, top: 100 }}>
                         <Text style={{color:"white"}}>Followers {this.followersLength()}</Text>
                     </TouchableOpacity>
 
-                   <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
+                   <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{ padding:5, left: 5, top: 100 }} >  
                     <Text style={{color:"white"}} >following {this.followingLength()}</Text>
                     </TouchableOpacity>
                 </View>
@@ -257,11 +250,11 @@ export default class Profile extends Component {
                     }else{
                         this.follow()
                     }}} style={styles.follow}>
-                        <Text style={{textAlign: "center", top:10, color: "white", fontSize:18}}>{this.state.followButtonText}</Text>    
+                        <Text style={{ textAlign: "center", top:10, color: "white", fontSize:18}}>{this.state.followButtonText }</Text>    
                 </TouchableOpacity>
 
                 <View>
-                  <Text style={{fontFamily:'Freight Sans', fontSize: 25, textAlign:"center", top:-25}} >chits</Text>
+                  <Text style={{ fontFamily:'Freight Sans', fontSize: 25, textAlign:"center", top:-25 }} >chits</Text>
                 </View>
                 
                 <ScrollView style={{backgroundColor: "#1b2836", height: 500}}>

@@ -8,15 +8,13 @@ class DraftsPage extends Component {
     
     constructor(props){
         super(props)
-        
         this.state={
             savedChit:'', 
             edited:'',
             allchits: []  
         } 
     }
-
-
+    
     getChits = async()=>{
         const allchits = []
         AsyncStorage.getItem('ChitContent', (error, result) => {
@@ -28,10 +26,10 @@ class DraftsPage extends Component {
     }
 
     edit(edited){
-      AsyncStorage.setItem('ChitContent', edited)
+      AsyncStorage.setItem('ChitContent', edited);
     }
     componentDidMount() {
-        this.getChits()
+        this.getChits();
     }
     render() {
         return (

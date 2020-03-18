@@ -9,7 +9,6 @@ class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             isLoading: true,
             chitData: [],
@@ -27,34 +26,9 @@ class HomeScreen extends Component {
             outside: null
             }
         }
-
-    requestLocationPermission = async() =>{
-        try {
-            const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-                title: 'chittr',
-                message:
-                    'This app requires access to your location.',
-                buttonNeutral: 'Ask Me Later',
-                buttonNegative: 'Cancel',
-                buttonPositive: 'OK',
-                },
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log('You can access location');
-                return true;
-                } else {
-                    console.log('Location permission denied');
-                    return false;
-                }
-        } catch (err) {
-            console.warn(err);
-        }
-    }
-           
+     
     
-
+    //get all the chits to be displayed in the flat list 
     getchits() {
         return fetch("http://10.0.2.2:3333/api/v0.0.5/chits?")
             .then((response) => response.json())
@@ -71,7 +45,7 @@ class HomeScreen extends Component {
 
     componentDidMount() {
         this.getchits();
-        this.requestLocationPermission()
+
     }
     render() {
         if (this.state.isLoading) {

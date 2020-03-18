@@ -7,7 +7,6 @@ class  editPage extends Component {
 
         constructor(props) {
             super(props);
-    
             this.state = {
                 UserData: [],
                 dataReceived: [],
@@ -26,17 +25,16 @@ class  editPage extends Component {
                 photo:'', 
                 photoData: null,      
                 filename:''      
-    
             }
         }
+        // save the chit content to be used in the drafts page.
         saveChit = async()=>{
-              AsyncStorage.setItem('ChitContent', JSON.stringify(this.state.chit_content))
+              AsyncStorage.setItem('ChitContent', JSON.stringify(this.state.chit_content));
         }
         componentDidMount() {
         }
 
     render() {
-
         return (
             <View style={styles.wrapper}>
                 <TextInput
@@ -52,7 +50,7 @@ class  editPage extends Component {
                 <TouchableOpacity style={styles.edit}
                     onPress={() =>
                             this.saveChit().then(()=> {
-                              this.props.navigation.navigate('drafts')
+                              this.props.navigation.navigate('drafts');
                             })
                     }
                 >

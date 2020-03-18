@@ -11,7 +11,6 @@ export default class Profile extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             isLoading: true,
             given_name:'',
@@ -30,11 +29,8 @@ export default class Profile extends Component {
         this.setState({
             user_id: UserID,
             token: Token 
-        })
-
-        
+        });
         this.postChange()
-        
         console.log("here from make edit page", JSON.stringify(UserID), "token: " , Token)
     }
 
@@ -53,15 +49,15 @@ export default class Profile extends Component {
                 })
             }).then((response) => response.json())
             .then((responseJson)=> {
-                console.log("here", responseJson)
+                console.log("here", responseJson);
             })
             .catch((error) => {
-                console.log("error", error)
+                console.log("error", error);
             });
     }
 
     componentDidMount() {
-        this.getUserIDToken()
+        this.getUserIDToken();
     }
 
 

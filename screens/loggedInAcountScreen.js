@@ -18,7 +18,6 @@ export default class Profile extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             isLoading: true,
             UserData: [],
@@ -38,22 +37,20 @@ export default class Profile extends Component {
             userPicUri:''
         }
     }
-
-
+    //get userID is ran when the page loads that is why this method many other methods
     getUserID = async () => {
         const response = await AsyncStorage.getItem('LoginUserID');
 
         this.setState({
             user_id: response,
             userPicUri: `http://10.0.2.2:3333/api/v0.0.5/user/${response}"/photo`
-        })
+        });   
 
-        
-        this.getUserDetails()
-        this.getfollowing()
-        this.getfollowers()
-        this.getUserImage()
-        console.log("here from account page", response)
+        this.getUserDetails();
+        this.getfollowing();
+        this.getfollowers();
+        this.getUserImage();
+        console.log("here from account page", response);
 
     }
 
@@ -95,7 +92,7 @@ export default class Profile extends Component {
             this.setState({
                 userProfilePic: response.url
             })
-            console.log("image data", response.url)
+            console.log("image data", response.url);
         })
         .catch((error) => {
             console.log(error);
@@ -110,7 +107,7 @@ export default class Profile extends Component {
                 isLoading: false,
                 following: responseJson,
             });
-            console.log("following", this.state.listOfFollowing)
+            console.log("following", this.state.listOfFollowing);
         })
         .catch((error) => {
             console.log(error);
@@ -131,21 +128,21 @@ export default class Profile extends Component {
             console.log(error);
         });
     }
-
+    //get the length of the list of followers to be displayed on the page
     followersLength(){
         console.log(this.state.followers.length)
         return this.state.followers.length
     }
-
+    //do the same with the following length
     followingLength(){
-        console.log("following", this.state.following.length)
-        return this.state.following.length 
+        console.log("following", this.state.following.length);
+        return this.state.following.length;
     }
 
     clearAsync = async() =>{
         AsyncStorage.removeItem('LoginToken');
     }
-
+    //get the user accounts image to be displayed in the page
     getchitImage(){
         return fetch("http://10.0.2.2:3333/api/v0.0.5/chits/"+ this.state.user_id+"/photo")
         .then((response) => response.json())
@@ -161,11 +158,9 @@ export default class Profile extends Component {
         });
     }
 
-
     componentDidMount() {
-        this.getUserID()
+        this.getUserID();
     }
-
 
     render() {
         return (

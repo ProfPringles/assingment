@@ -13,7 +13,6 @@ class HomeScreen extends Component {
         this.state = {
             isLoading: true,
             chitData: [],
-
             chit_id: 0,
             timestamp: 0,
             chit_content: '',
@@ -26,12 +25,8 @@ class HomeScreen extends Component {
             email:'', 
             outside: null,
             photo: []
-            }
         }
-
-    
-    
-
+    }
     getchits() {
         return fetch("http://10.0.2.2:3333/api/v0.0.5/chits?")
             .then((response) => response.json())
@@ -45,11 +40,6 @@ class HomeScreen extends Component {
                 console.log(error);
             });
     }  
-    
-    getImageChit(){
-        
-    }
-
     
     componentDidMount() {
         this.getchits();
@@ -130,15 +120,11 @@ class HomeScreen extends Component {
                                             top: 0,
                                             left: 30,
                                             height: 30,}} 
-                    source={require('./iconfinder_JD-07_2246820.png')} />
+                                            source={require('./iconfinder_JD-07_2246820.png')} />
                             </TouchableOpacity>
                         <Text style={styles.chit_content}>
                                      {item.chit_content}
-                                </Text>
-                        
-                        
-                            
-                                               
+                                </Text>                      
                         </View>
                     </TouchableOpacity>}
 

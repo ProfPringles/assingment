@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox, TextComponent } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
-class SerchPage extends Component {
-    
+class SerchPage extends Component {   
     constructor(props) {
         super(props);
-
         this.state = {
             isLoading: true,
             UserData: [],
@@ -17,9 +15,7 @@ class SerchPage extends Component {
             serach:''
         }
     }
-
-
-    
+    //get the user details of the serach query
     getuser= () =>
     {
         return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user?q='+this.state.serach)
@@ -29,28 +25,25 @@ class SerchPage extends Component {
                 isLoading: false,
                 UserData: responseJson,
             });
-
         })
         .catch((error) => {
             console.log(error);
         });
     }
     componentDidMount(){
-        this.getuser()
+        this.getuser();
     }
 
     saveId = async(userID) =>{
         try{
-            await AsyncStorage.setItem('UserID', JSON.stringify(userID))
-            console.log(JSON.stringify(userID))      
+            await AsyncStorage.setItem('UserID', JSON.stringify(userID));
+            console.log(JSON.stringify(userID));      
         }catch(error){
-            console.log(error)
+            console.log(error);
         }
     }
 
-
     render() {
-
         if (this.state.isLoading) {
             <view>
                 <ActivityIndicator/>
@@ -61,7 +54,7 @@ class SerchPage extends Component {
             <SearchBar 
                 round
                 searchIcon={() =>{
-                        false
+                        false;
                     }                    
                 }
                 placeholder="type a persons name"
@@ -79,33 +72,27 @@ class SerchPage extends Component {
                 <FlatList
                    data={this.state.UserData}
                    renderItem={({ item, index }) =>
-                       <TouchableOpacity style={
-                        { padding: 10, 
-                         flex: 1, 
+                       <TouchableOpacity style={{ 
+                          padding: 10, 
+                          flex: 1, 
                           borderTopColor: "black",
                           borderBottomColor: "black", 
                           borderTopWidth: 1,
                           borderBottomWidth: 1,
                           flexDirection:"column",
-                          backgroundColor: "#1b2836"}} 
-                       
-                       
-                       
+                          backgroundColor: "#1b2836" }} 
+
                        onPress={() => {
                             this.props.navigation.navigate('AccountScreen'),
-                            this.saveId(item.user_id)
+                            this.saveId(item.user_id);
                             }
                         }>
-
-                        <Text style={{color: "white", fontSize: 15, left: 50, position: "relative"}} >{"user : "}{item.given_name} </Text>
-                        <Text style={{color: "white", fontSize: 15,  left: 50, position: "relative"}}>{"family name: "}{ item.family_name}
+                        <Text style={{ color: "white", fontSize: 15, left: 50, position: "relative" }} >{ "user : " }{item.given_name} </Text>
+                        <Text style={{ color: "white", fontSize: 15,  left: 50, position: "relative" }}>{ "family name: "}{ item.family_name}
                         </Text>
-
                         <Image 
                                 style={{
                                     top: 15,
-                                    //backgroundColor: '#A9A9A9',
-                                    //textAlign: 'Center',
                                     position:"absolute",
                                     left: 10,
                                     width: 40,
@@ -116,7 +103,6 @@ class SerchPage extends Component {
                             />
                        </TouchableOpacity>}
                    keyExtractor={({ id }, index) => id}
-
                 />
             </View>
         );
