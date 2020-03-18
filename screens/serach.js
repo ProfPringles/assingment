@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox, TextComponent } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import {Container, Header, Title, Body} from 'native-base'
 
 class SerchPage extends Component {   
     constructor(props) {
@@ -50,18 +51,20 @@ class SerchPage extends Component {
             </view>
         }
         return (
-            <View style={styles.wrapper} behavior="padding">
-            <SearchBar 
-                round
-                searchIcon={() =>{
-                        false;
-                    }                    
-                }
-                placeholder="type a persons name"
-                value={this.state.serach}
-                onChangeText={(serach) => this.setState({ serach })}
-
-            />
+            /*I have tried to change the background colour of the 
+              serach bar but sadly nothing works   
+            */
+            <Container style={styles.wrapper} behavior="padding">
+                        <SearchBar
+                            round
+                        searchIcon={() =>{
+                                    true;
+                            }                    
+                        }
+                        placeholder="type a persons name"
+                        value={this.state.serach}
+                        onChangeText={(serach) => this.setState({ serach })}
+                        />
                 <Button
                     accessible={true}
                     title="Search"
@@ -105,13 +108,16 @@ class SerchPage extends Component {
                        </TouchableOpacity>}
                    keyExtractor={({ id }, index) => id}
                 />
-            </View>
+            </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
+    Header: {
+        width:100,
+        backgroundColor:'#1b2836'	
+    },
     wrapper: {
         display: "flex", 
         flex: 1,

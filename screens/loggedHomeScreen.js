@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, Modal, TextBase } from 'react-native';
-
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import {Container, Header, Left, Body, Right, Icon, Title, Subtitle} from 'native-base'
 import ImageViewer from 'react-native-image-zoom-viewer';
 class HomeScreen extends Component {
 
@@ -54,7 +53,13 @@ class HomeScreen extends Component {
         }
 
         return (
+            <Container style={styles.header}> 
+            <Header style={styles.header} androidStatusBarColor="#1b2836">
             
+                    <Body>
+                        <Title>Home</Title>
+                    </Body>
+            </Header>
             <ScrollView style={styles.container}>    
                 <FlatList
                     
@@ -131,11 +136,18 @@ class HomeScreen extends Component {
                     keyExtractor={({ item }, indeax) => item}
                 />
             </ScrollView>
+            </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    header:{
+        backgroundColor: '#1b2836',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        height: 30
+    }, 
     image: {
         alignContent: "center",
         margin: 50,
@@ -146,9 +158,9 @@ const styles = StyleSheet.create({
     NameTittle: {
         color: "white", 
         flex: 1,
-        left: -5,
+        left: 10,
         fontWeight: "bold",
-        top: -30, 
+        top: -25, 
         
     },
 
@@ -159,7 +171,7 @@ const styles = StyleSheet.create({
         marginBottom: 1,
         padding: 16,
         backgroundColor: 'transparent',
-        marginTop: 5,
+        marginTop: 0,
         flex: 1,
         borderBottomColor: "black",
         borderBottomWidth: 1,
@@ -169,11 +181,9 @@ const styles = StyleSheet.create({
 
     item: {
         //backgroundColor: '#D3D3D3',
-
         flex: 1, 
         borderColor: "blue", 
         borderWidth: 0, 
-
         padding: 30,
         marginVertical: 3,
         marginHorizontal: 16,
@@ -183,14 +193,14 @@ const styles = StyleSheet.create({
         fontSize: 5,
     },
     text: {
-        paddingLeft: 20,
+        left: 20,
         fontSize: 42,
     }, 
     chit_content: {
         color: 'white',
         position: 'absolute',
-        top: 20,
-        paddingLeft: 25,
+        top: 22,
+        left: 40,
         
     }
 });

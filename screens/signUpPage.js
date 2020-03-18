@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
-import { Label, Form,  StyleProvider,Button  } from 'native-base';
+import { Label, Form,  StyleProvider,Button, Container  } from 'native-base';
 export default class signupPage extends Component{
   
   constructor(props){
@@ -39,7 +39,7 @@ export default class signupPage extends Component{
 
   render(){
     return(
-      <View style={styles.container} >
+      <Container style={styles.container} >
           <Button style={styles.back}
               accessible={true}
               onPress={() => 
@@ -49,7 +49,7 @@ export default class signupPage extends Component{
                   back
               </Text>
           </Button> 
-          <View>
+          <Container style={styles.container}>
           <Label accessible={true} style={styles.emailTittle} >email</Label>
               <TextInput style={{top:70, left:2, fontSize:20, color:"white", position:"absolute" , borderBottomColor: "white",borderBottomWidth: 1,width: "99%",  }}
                   placeholder="|"
@@ -90,10 +90,10 @@ export default class signupPage extends Component{
                       sign up
                   </Text>
                </TouchableOpacity>
-        </View>
+        </Container>
 
 
-      </View>
+      </Container>
     )
   }
 }
@@ -105,32 +105,30 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color:"white",
     fontSize: 20,
-    left:320,
+    left:329,
     borderWidth: 1,
     borderColor: "white"
 },
   container: {
-    height: 300,
-    width: null,
-    margin: 3,
-    backgroundColor: 'transparent',
-    marginTop: 5,
     flex: 1,
+    width: null,
+    //backgroundColor: 'transparent',
     borderBottomColor: "black",
     borderBottomWidth: 1,
     flexDirection: "column",
     backgroundColor: "#1b2836"
  },
   back:{
+    height: 40,
     textAlign: 'center',
-    width: 70,
-    top: 10,
+    width: 74,
+    top: 5,
     textAlign: "center",
     backgroundColor:"#ce1d1d",
     color:"white",
     fontSize: 20,
     left: 10,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: "white"
   },
     PPtittle: {

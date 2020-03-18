@@ -10,7 +10,7 @@ import {
     Alert
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import { Button } from 'native-base';
+import { Button, Container } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { object } from 'prop-types';
 
@@ -139,7 +139,6 @@ export default class Profile extends Component {
         });
         return following
     }
-
     follow(){
         if(this.state.token !==null){
             console.log("has run")
@@ -205,7 +204,7 @@ export default class Profile extends Component {
     render() {
         return (
 
-            <View style={styles.container}>
+            <Container style={styles.container}>
                 <Button accessible={true} style={styles.buttonContainer}  onPress={() =>{
                         console.log("pressed"),
                         this.clearAsync().then(() =>{
@@ -278,7 +277,7 @@ export default class Profile extends Component {
                 </ScrollView>
 
 
-            </View>
+            </Container>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-
+import {Container} from 'native-base'
 
 
 class  editPage extends Component {

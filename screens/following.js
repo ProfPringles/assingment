@@ -10,7 +10,7 @@ import {
     Alert
 } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import { Button } from 'native-base';
+import { Button, Container } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { object } from 'prop-types';
 
@@ -62,7 +62,7 @@ export default class following extends Component {
 
         render(){
             return(
-                <View style={{backgroundColor:"#1b2836", padding: 20}}>
+                <Container style={{backgroundColor:"#1b2836", padding: 20}}>
                 <TouchableOpacity
                     accessible={true}
                     style={{ width: 60, height: 30, top: -10, left: -15, borderWidth: 1,borderColor: "white", backgroundColor: '#ce1d1d' }}
@@ -92,7 +92,7 @@ export default class following extends Component {
                         keyExtractor={({ id }, index) => id}
                         />
                 </ScrollView>
-            </View>
+            </Container>
         );
     }
 }

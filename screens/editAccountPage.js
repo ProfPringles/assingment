@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         color:"white",
         fontSize: 20,
         left: 10,
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: "white"
     },
     PP:{

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-
-import { ScrollView } from 'react-native-gesture-handler';
-import ImagePicker from 'react-native-image-picker';
+import { TextInput, AsyncStorage, Text, View, Image, StyleSheet, Alert, TouchableOpacity} from 'react-native';
+import {Button, Container} from 'native-base'
 import Geolocation from 'react-native-geolocation-service';
+
 const options = {
     title: 'open images',
     storageOptions: {
@@ -202,7 +201,7 @@ class MakeChit extends Component {
     render() {
 
         return (
-            <View style={styles.wrapper}>
+            <Container style={styles.wrapper}>
                 <TextInput
                       accessible={true}
                       placeholder="What's going on?"
@@ -253,7 +252,7 @@ class MakeChit extends Component {
                      style={{width: 300, height: 300}}
                     />
                 </View>
-            </View>  
+            </Container>  
         );
     }
 }
@@ -278,7 +277,7 @@ const styles = StyleSheet.create({
         width: 60,
         top: -69,
         left: 270,
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: "white"
     },
     Images:{
@@ -299,11 +298,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#1b2836',	
         borderColor: 'white',
-        borderWidth: 3,
+        borderWidth: 0,
         left: 0,
         width: "100%",
         height: "100%", 
-        top: 3
+        top: 0
 
     },
 

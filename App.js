@@ -3,8 +3,6 @@ import { Image, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { createAppContainer, createSwitchNavigator} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
-
 import HomeScreen from './screens/homescreen.js';
 import Serach from './screens/serach.js';
 import LoginPage from './screens/loginPage.js';
@@ -37,7 +35,7 @@ const AppStackNav = createBottomTabNavigator( {
                     }
                 />
             )
-        }
+        },   
     },
     serach: {
         screen: Serach,

@@ -13,7 +13,7 @@ import { ButtonGroup } from 'react-native-elements';
 import { Button } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { object } from 'prop-types';
-
+import {Container} from 'native-base'
 export default class followers extends Component {
 
     constructor(props){
@@ -59,7 +59,7 @@ export default class followers extends Component {
         }
         render(){
             return(
-                <View style={{backgroundColor:"#1b2836", padding: 20}}>
+                <Container style={{backgroundColor:"#1b2836", padding: 20}}>
                     <TouchableOpacity accessible={true}
                         style={{ width: 60, height: 30, top: -10, left: -15, borderWidth: 1,borderColor: "white", backgroundColor: '#ce1d1d' }}
                         onPress={() =>{
@@ -90,7 +90,7 @@ export default class followers extends Component {
                             />
                     </ScrollView>
 
-                </View>
+                </Container>
                 
             );
 
