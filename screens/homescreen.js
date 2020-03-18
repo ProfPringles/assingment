@@ -80,7 +80,7 @@ class HomeScreen extends Component {
                                 height: 125,
                             }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.chit_id}/photo`}}/>    
                             
-                            <Text style={styles.NameTittle}>
+                            <Text accessible={true} style={styles.NameTittle}>
                                 {Object.values(item.user.given_name) }
                                 {":"}
                             </Text>

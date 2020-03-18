@@ -204,6 +204,7 @@ class MakeChit extends Component {
         return (
             <View style={styles.wrapper}>
                 <TextInput
+                      accessible={true}
                       placeholder="What's going on?"
                       style={styles.inputText}
                       value={this.state.chit_content}
@@ -223,7 +224,7 @@ class MakeChit extends Component {
                         })
                     }
                 >
-                    <Text style={styles.postChitText}>
+                    <Text accessible={true} style={styles.postChitText}>
                         chit
                     </Text>
                 </TouchableOpacity>
@@ -231,7 +232,7 @@ class MakeChit extends Component {
                 <TouchableOpacity style={styles.Drafts}
                     onPress={() => {this.props.navigation.navigate('drafts')}}
                 >
-                    <Text style={styles.postChitText}>
+                    <Text accessible={true} style={styles.postChitText}>
                          drafts
                     </Text>
                 </TouchableOpacity>

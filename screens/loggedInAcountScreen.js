@@ -166,7 +166,7 @@ export default class Profile extends Component {
         return (
 
             <View style={styles.container}>
-                <Button style={styles.buttonContainer} onPress={() =>{
+                <Button accessible={true} style={styles.buttonContainer} onPress={() =>{
                         console.log("pressed"),
                         this.logout()
                         this.clearAsync().then(() =>{     
@@ -183,19 +183,19 @@ export default class Profile extends Component {
                  }}
                  style={styles.avatar} 
                 />                    
-                    <Text style={styles.name}>{this.state.UserData.family_name}</Text>
-                    <Text style={styles.accountname}>{this.state.UserData.given_name}</Text>
+                    <Text accessible={true} style={styles.name}>{this.state.UserData.family_name}</Text>
+                    <Text accessible={true} style={styles.accountname}>{this.state.UserData.given_name}</Text>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{padding:5, left: 5, top: 100 }}>
-                        <Text style={{color:"white"}}>Followers {this.followersLength()}</Text>
+                    <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowersScreen')}  style={{padding:5, left: 5, top: 100 }}>
+                        <Text  style={{color:"white"}}>Followers {this.followersLength()}</Text>
                     </TouchableOpacity>
 
-                   <TouchableOpacity onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
-                    <Text style={{color:"white"}} >following {this.followingLength()}</Text>
+                   <TouchableOpacity accessible={true} onPress={() => this.props.navigation.navigate('FollowingScreen')} style={{padding:5, left: 5, top: 100}} >  
+                        <Text style={{color:"white"}} >following {this.followingLength()}</Text>
                     </TouchableOpacity>
                     
                     
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity accessible={true} onPress={()=>{
                         this.props.navigation.navigate('editAccountScreen')
                     }} style={styles.Edit} >
                         <Text style={{textAlign: "center", top:10, color: "white", fontSize:20}}>edit</Text>    
@@ -208,14 +208,14 @@ export default class Profile extends Component {
                 </View>
                 
                 <View>
-                  <Text style={{fontFamily:'Freight Sans', fontSize: 25, textAlign:"center"}} >chits</Text>
+                  <Text accessible={true} style={{fontFamily:'Freight Sans', fontSize: 25, textAlign:"center"}} >chits</Text>
                 </View>
                 
                 <ScrollView style={{backgroundColor: "#1b2836", height: 500}}>
                     <FlatList
                         data={this.state.UserData.recent_chits}
                         renderItem={({ item, index }) =>
-                            <TouchableOpacity style={{
+                            <TouchableOpacity accessible={true} style={{
                               padding: 10, flex: 1, 
                               borderBottomColor: "black", 
                               borderBottomWidth: 1,

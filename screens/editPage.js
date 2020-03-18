@@ -38,6 +38,7 @@ class  editPage extends Component {
         return (
             <View style={styles.wrapper}>
                 <TextInput
+                      accessible={true}
                       placeholder="edit"
                       style={styles.inputText}
                       value={this.state.chit_content}
@@ -47,7 +48,7 @@ class  editPage extends Component {
                 
                 </TextInput>
 
-                <TouchableOpacity style={styles.edit}
+                <TouchableOpacity accessible={true} style={styles.edit}
                     onPress={() =>
                             this.saveChit().then(()=> {
                               this.props.navigation.navigate('drafts');

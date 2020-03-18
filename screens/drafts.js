@@ -14,7 +14,7 @@ class DraftsPage extends Component {
             allchits: []  
         } 
     }
-    
+
     getChits = async()=>{
         const allchits = []
         AsyncStorage.getItem('ChitContent', (error, result) => {
@@ -38,8 +38,8 @@ class DraftsPage extends Component {
                 <Label style={styles.label}>latest chit:</Label>
 
                 <View style={styles.button}>
-                    <Text style={styles.text} >{this.state.savedChit}</Text>
-                    <TouchableOpacity style={styles.buttonDelete} onPress={()=>
+                    <Text accessible={true} style={styles.text} >{this.state.savedChit}</Text>
+                    <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>
                         AsyncStorage.removeItem('ChitContent')} ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.buttonDelete} onPress={() => this.props.navigation.navigate('editpage')}  ><Text style={styles.edit} >edit</Text></TouchableOpacity>    
                 </View>

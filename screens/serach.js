@@ -63,6 +63,7 @@ class SerchPage extends Component {
 
             />
                 <Button
+                    accessible={true}
                     title="Search"
                     onPress={() =>{
                         this.getuser()
