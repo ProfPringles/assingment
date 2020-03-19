@@ -26,8 +26,7 @@ class HomeScreen extends Component {
             outside: null
             }
         }
-     
-    
+        
     //get all the chits to be displayed in the flat list 
     getchits() {
         return fetch("http://10.0.2.2:3333/api/v0.0.5/chits?")

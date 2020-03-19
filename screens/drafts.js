@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, Alert } from 'react-native';
-import { Label, Container, Header, Body, Title } from 'native-base';
+import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, Alert, FlatList } from 'react-native';
+import { Label, Container, Header, Body, Title, Item } from 'native-base';
 import { color } from 'react-native-reanimated';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 class DraftsPage extends Component {
@@ -12,55 +13,75 @@ class DraftsPage extends Component {
             savedChit:'', 
             edited:'',
             allchits: []  
+
         } 
     }
 
-    getChits = async()=>{
-        var allchits = []
-        const savedChit = await AsyncStorage.getItem('ChitContent');
-            this.setState({ 
-                savedChit: savedChit 
-            });
-        allchits.push(savedChit)
-        console.log(this.state.savedChit)
+    getAllChits = async()=>{
+        var ReturnVal =[]; 
+        try{
+            const keyvalues = await AsyncStorage.getAllKeys()
+            ReturnVal = keyvalues;
+        }catch(error){
+            console.log(error)
+        }
+        
+        this.setState({
+            allchits: ReturnVal.splice(4, 5)
+        })
+        console.log("here", this.state.allchits)
+        return ReturnVal.splice(0, 4)
     }
 
-    addToArray(savedChit){
-        console.log(savedChit)
+    delte(item){
+        console.log(item);
+        AsyncStorage.removeItem(item);
+        
     }
-    edit(edited){
-      AsyncStorage.setItem('ChitContent', edited);
+   
+    editCHit(item){
+        this.props.navigation.navigate('editpage')
+        
+        AsyncStorage.setItem("toBedited", item)  
     }
     componentDidMount() {
-        this.getChits()
+        AsyncStorage.removeItem("toBedited");
+        AsyncStorage.removeItem("chitID");
+        this.getAllChits() 
+
+      
     }
     render() {
         return (
 
-            <Container style={styles.container}> 
-                <View style={styles.button}>
+            <ScrollView style={styles.container}> 
                 <Label accessible={true} style={styles.label} >latest chit:</Label>
-                    <Text accessible={true} style={styles.text} >{this.state.savedChit}</Text>
-                    <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>{
-                        AsyncStorage.removeItem('ChitContent')}} ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonDelete} onPress={() => this.props.navigation.navigate('editpage')}  ><Text style={styles.edit} >edit</Text></TouchableOpacity>    
-                </View>
+                <FlatList style={{}}  
+                    data={this.state.allchits}
+                    renderItem={({ item, index }) =>
+                    <View style={styles.item}>
+                        <Text accessible={true} style={styles.text} >{item}</Text>
 
-            </Container>
+                        <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>{this.delte(item)}}
+                        ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
+
+                    <TouchableOpacity style={styles.buttonDelete} onPress={() => this.editCHit(item)}><Text style={styles.edit}>edit</Text></TouchableOpacity>    
+                    </View>
+
+                    }                        
+                    keyExtractor={({ item }, index) => item}
+                />
+                </ScrollView>
+            
         );
     }
 }
 export default DraftsPage;
 const styles = StyleSheet.create({
-    header:{
-        backgroundColor: '#1b2836',
-        borderBottomColor: 'black',
-        borderBottomWidth: 0,
-        height: 30
-    },
 
     container:{
         flex: 1,
+        padding: 10,
         backgroundColor: '#1b2836',
     },
 
@@ -77,15 +98,18 @@ const styles = StyleSheet.create({
     text:{
         left: 3,
         top: 10,
+        fontSize: 15,
         width: 280,
         color: 'white'
     },
     edit:{
-        fontSize: 20,
+        fontSize: 18,
+        left: 5,
         color: 'white'
     },
     textDelete: {
-        fontSize: 20,
+        padding: 2,
+        fontSize: 18,
         color: '#d33f49'
     },
     label: {
