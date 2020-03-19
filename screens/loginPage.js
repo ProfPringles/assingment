@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, YellowBox, Alert } from 'react-native';
 import React, { Component } from 'react';
-import { Label, Form,  StyleProvider,Button  } from 'native-base';
+import { Label, Form,  StyleProvider,Button,  } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 import { multiply } from 'react-native-reanimated';
 
@@ -18,6 +18,7 @@ class Loginpage extends Component {
         this.state = {
             data: [],
             authorized: false,
+            loading: true,
             email:'',
             password:'',
             id:'',

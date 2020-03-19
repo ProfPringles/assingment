@@ -110,7 +110,8 @@ class MakeChit extends Component {
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel',
                     },
-                    {text: 'OK', onPress: () => AsyncStorage.setItem('ChitContent', JSON.stringify(this.state.chit_content))},
+                    {text: 'OK', onPress: () =>{
+                     AsyncStorage.setItem('ChitContent', this.state.chit_content)}},
                 ],
                 {cancelable: false},
             );
@@ -218,8 +219,8 @@ class MakeChit extends Component {
                 </Text>
                 <TouchableOpacity style={styles.postChit}
                     onPress={() =>
-                        this.findCoordinates().then(() => {
-                            this.saveChit()
+                        this.saveChit().then(()=>{
+                            this.findCoordinates()
                         })
                     }
                 >

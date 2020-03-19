@@ -20,7 +20,10 @@ import signUpPage from './screens/signUpPage.js'
 import editpage from './screens/editPage.js'
 import { Icon } from 'native-base';
 import accountpage from './screens/accountpage.js';
-
+/*
+app.js is used to set up the navigation stacks for both logged in and logged out screens 
+this is not a componant
+*/
 const AppStackNav = createBottomTabNavigator( {
 
     Home: {

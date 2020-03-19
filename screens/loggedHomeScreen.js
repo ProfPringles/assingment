@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, Modal, TextBase } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-import {Container, Header, Left, Body, Right, Icon, Title, Subtitle} from 'native-base'
+import {Container, Header,Body,Title, Thumbnail} from 'native-base'
 import ImageViewer from 'react-native-image-zoom-viewer';
 class HomeScreen extends Component {
 
@@ -39,6 +39,16 @@ class HomeScreen extends Component {
                 console.log(error);
             });
     }  
+    //convert the unix time stamp to real time using in built javascript so that time is displayed in the app
+    convertTime(timestamp){
+        var a = new Date(timestamp);
+        //a list of the months for the .getmonths() method to use 
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var time = date + ' ' + month + ' ' ;
+        return time;
+    } 
     
     componentDidMount() {
         this.getchits();
@@ -89,7 +99,7 @@ class HomeScreen extends Component {
                             }} source={{uri:`http://10.0.2.2:3333/api/v0.0.5/chits/${item.chit_id}/photo`}}/>
                             <Text accessible={true} style={styles.NameTittle}>
                                 {Object.values(item.user.given_name) }
-                                {":"}
+                                {""}
                             </Text>
                             
                             <Text accessible={true} style={{
@@ -104,21 +114,21 @@ class HomeScreen extends Component {
 
                             }}>
                                 
-                            <Image 
+                            
+                        </Text>
+                        <Thumbnail 
                                 style={{
-                                    top: -50,
-                                    //backgroundColor: '#A9A9A9',
+                                    top: 6,
+                                    
                                     //textAlign: 'Center',
                                     position:"absolute",
-                                    left: 10,
+                                    left: -20,
                                     width: 40,
                                     height: 40 ,
                                 }}
-                                source={{uri:  `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`}}
+                                source={{uri: `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`+'?' + Date.now()}}
                                 name="login"
                             />
-                            
-                        </Text>
                         <TouchableOpacity style={{ top: 34, left: 240}}>
                                     <Image style={{backgroundColor: 'transparent',
                                             width: 30,
@@ -128,8 +138,11 @@ class HomeScreen extends Component {
                                             source={require('./iconfinder_JD-07_2246820.png')} />
                             </TouchableOpacity>
                         <Text style={styles.chit_content}>
-                                     {item.chit_content}
-                                </Text>                      
+                            {item.chit_content}
+                        </Text>        
+                            
+                            <Text style={styles.time} >{'• '}{this.convertTime(item.timestamp)}</Text>
+                        
                         </View>
                     </TouchableOpacity>}
 
@@ -162,6 +175,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         top: -25, 
         
+    },
+    time:{
+       fontSize: 10,
+       top: -71,
+       left: 42,
+       color: '#66717e'
     },
 
     container: {
@@ -198,6 +217,7 @@ const styles = StyleSheet.create({
     }, 
     chit_content: {
         color: 'white',
+        width: 170,
         position: 'absolute',
         top: 22,
         left: 40,

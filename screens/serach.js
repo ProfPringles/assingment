@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, YellowBox, TextComponent } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import {Container, Header, Title, Body} from 'native-base'
+import {Container, Header, Title, Body, Thumbnail} from 'native-base'
 
 class SerchPage extends Component {   
     constructor(props) {
@@ -94,7 +94,7 @@ class SerchPage extends Component {
                         <Text style={{ color: "white", fontSize: 15, left: 50, position: "relative" }} >{ "user : " }{item.given_name} </Text>
                         <Text style={{ color: "white", fontSize: 15,  left: 50, position: "relative" }}>{ "family name: "}{ item.family_name}
                         </Text>
-                        <Image 
+                        <Thumbnail 
                                 style={{
                                     top: 15,
                                     position:"absolute",
@@ -102,7 +102,7 @@ class SerchPage extends Component {
                                     width: 40,
                                     height: 40 ,
                                 }}
-                                source={{uri: 'http://10.0.2.2:3333/api/v0.0.5/user/'+item.user_id+'/photo'}}
+                                source={{uri: `http://10.0.2.2:3333/api/v0.0.5/user/${item.user_id}"/photo`+'?' + Date.now()}}
                                 name="login"
                             />
                        </TouchableOpacity>}

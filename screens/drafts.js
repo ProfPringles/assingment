@@ -16,20 +16,23 @@ class DraftsPage extends Component {
     }
 
     getChits = async()=>{
-        const allchits = []
-        AsyncStorage.getItem('ChitContent', (error, result) => {
+        var allchits = []
+        const savedChit = await AsyncStorage.getItem('ChitContent');
             this.setState({ 
-                savedChit: result 
-            }, function () {
+                savedChit: savedChit 
             });
-        });
+        allchits.push(savedChit)
+        console.log(this.state.savedChit)
     }
 
+    addToArray(savedChit){
+        console.log(savedChit)
+    }
     edit(edited){
       AsyncStorage.setItem('ChitContent', edited);
     }
     componentDidMount() {
-        this.getChits();
+        this.getChits()
     }
     render() {
         return (
@@ -38,8 +41,8 @@ class DraftsPage extends Component {
                 <View style={styles.button}>
                 <Label accessible={true} style={styles.label} >latest chit:</Label>
                     <Text accessible={true} style={styles.text} >{this.state.savedChit}</Text>
-                    <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>
-                        AsyncStorage.removeItem('ChitContent')} ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
+                    <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>{
+                        AsyncStorage.removeItem('ChitContent')}} ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.buttonDelete} onPress={() => this.props.navigation.navigate('editpage')}  ><Text style={styles.edit} >edit</Text></TouchableOpacity>    
                 </View>
 
@@ -72,8 +75,9 @@ const styles = StyleSheet.create({
         top: -30
     },
     text:{
+        left: 3,
         top: 10,
-        fontSize: 28,
+        width: 280,
         color: 'white'
     },
     edit:{

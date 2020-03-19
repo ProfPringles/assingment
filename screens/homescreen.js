@@ -3,7 +3,7 @@ import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Ale
 
 import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-import {Container, Header, Left, Body, Right, Icon, Title, Subtitle} from 'native-base'
+import {Container, Header, Body, Title, Thumbnail} from 'native-base'
 
 class HomeScreen extends Component {
 
@@ -103,21 +103,21 @@ class HomeScreen extends Component {
 
                             }}>
                             
-                            <Image 
+                            
+                        </Text>
+                        <Thumbnail 
                                 style={{
-                                    top: -50,
+                                    top: 6,
                                     //backgroundColor: '#A9A9A9',
                                     //textAlign: 'Center',
                                     position:"absolute",
-                                    left: 10,
+                                    left: -20,
                                     width: 40,
                                     height: 40 ,
                                 }}
-                                source={{uri: `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`}}
+                                source={{uri: `http://10.0.2.2:3333/api/v0.0.5/user/${item.user.user_id}"/photo`+'?' + Date.now()}}
                                 name="login"
                             />
-                        </Text>
-
                         <Text style={styles.chit_content}>
                                      {item.chit_content}
                                 </Text>
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     }, 
     chit_content: {
         color: 'white',
+        width: 170,
         position: 'absolute',
         top: 25,
         left: 40,
