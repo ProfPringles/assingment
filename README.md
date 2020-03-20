@@ -15,6 +15,8 @@ git clone https://github.com/ProfPringles/assingment
 
 if you wish to download the project without using git comands you can download a zip of the project by pressing the "clone or download" button on git
 
+navigate to the directory you download the repo into before running commands of course/
+
 once the project is downloaded run:
 
 ```bash 
