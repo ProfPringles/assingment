@@ -101,7 +101,7 @@ class MakeChit extends Component {
         //save the chit content for the drafts page
     saveChit = async()=>{
         Alert.alert(
-            'do you want to save that chit?',
+            'save that chit to drafts?',
             '',
             [     
                 {onPress: () => console.log('Ask me later pressed')},
@@ -237,6 +237,16 @@ class MakeChit extends Component {
                         upload image
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.save}
+                     onPress={() =>
+                         this.saveChit()
+                        }
+                    >
+                    <Text style={styles.postChitText}>
+                        save
+                    </Text>
+                </TouchableOpacity>
                     
                 <Image source={{uri: this.state.photo}}/>
                 
@@ -269,6 +279,13 @@ const styles = StyleSheet.create({
         width: 60,
         top: -69,
         left: 270,
+        borderWidth: 0,
+        borderColor: "white"
+    },
+    save:{
+        width: 60,
+        top: -150,
+        left: 0,
         borderWidth: 0,
         borderColor: "white"
     },

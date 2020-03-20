@@ -23,7 +23,6 @@ export default class cameraPage extends Component {
         this.postChange()
         console.log("here from make edit page", JSON.stringify(UserID), "token: " , Token)
     }
-
     takePicture = async function(camera) {
             if (this.camera) {
                     const options = { quality: 0.5, base64: true };
