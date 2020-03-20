@@ -1,16 +1,8 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, YellowBox, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator, TextInput, Image, AsyncStorage, YellowBox, Alert } from 'react-native';
 import React, { Component } from 'react';
-import { Label, Form,  StyleProvider,Button,  } from 'native-base';
+import { Button } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
-import { multiply } from 'react-native-reanimated';
-
-//import console = require('console');
-//import { HeaderBackground } from 'react-navigation-stack';
-//import FontAwesome, { Icons, parseIconName, parseIconFromClassName, IconTypes  } from 'react-native-fontawesome';
-//import { Icon } from 'react-native-elements'
-//import Icon from 'react-native-vector-icons/FontAwesome';
-
-//import { View, Text } from 'react-native';
+//stop the error box
 console.disableYellowBox = true; 
 class Loginpage extends Component {
     constructor(props) {
@@ -25,7 +17,10 @@ class Loginpage extends Component {
             token:'',
         }
     }
-
+    /*
+    this does not work but it's not needed but leaving it in as it could 
+    be used in the future if the Token needs to expire after a while.
+    */
     ExpireDate() {
         const now = new Date();
         const expireTime = new Date(now);
@@ -70,18 +65,21 @@ class Loginpage extends Component {
 
     checkAuth  = async() =>{
         try{
+            /*
+            set the token and userID make, making sure that
+            it is not the same as the logged out token for serach 
+            */
             AsyncStorage.setItem('LoginToken', this.state.data.token);
             AsyncStorage.setItem('LoginUserID', JSON.stringify(this.state.data.id));
             console.log(JSON.stringify(JSON.stringify(this.state.data.id)));     
         }catch(error){
             console.log(error)
         }
-        
         const token = await AsyncStorage.getItem('LoginToken');
         const id = await AsyncStorage.getItem('LoginUserID');
         //if the token is not null then allow the suer to logg in if it is null then alert the user.
         if(token !==null){
-                this.props.navigation.navigate('signedinhome')
+            this.props.navigation.navigate('signedinhome')
         }else{
             Alert.alert("you have enterted your email or password wrong please try again");
         }
@@ -98,7 +96,6 @@ class Loginpage extends Component {
             </View>
         }
         return (
-            
             <KeyboardAvoidingView style={styles.wrapper} behavior="padding">
                 <View style={styles.scrollViewWrapper}>
                     <Text style={styles.loginHeader}>chittr</Text>

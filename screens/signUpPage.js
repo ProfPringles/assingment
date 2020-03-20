@@ -34,7 +34,7 @@ export default class signupPage extends Component{
         })
         .catch((error) => {
             console.log("error", error);
-        });
+      });
   }
 
   render(){
@@ -78,8 +78,10 @@ export default class signupPage extends Component{
                     onChangeText={(family_name) => this.setState({ family_name })}
                   ></TextInput>
                    
-                  <TouchableOpacity
-                  accessible={true}
+
+        </Container>
+
+        <TouchableOpacity
                    style={styles.submit}
                     onPress={() => 
                         this.signup().then(()=>{
@@ -90,9 +92,6 @@ export default class signupPage extends Component{
                       sign up
                   </Text>
                </TouchableOpacity>
-        </Container>
-
-
       </Container>
     )
   }
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
   submit:{
     width: 74,
     height: 40,
-    top: -32,
+    top: -610,
     textAlign: "center",
     color:"white",
     fontSize: 20,

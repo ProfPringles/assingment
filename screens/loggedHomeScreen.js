@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, ActivityIndicator, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, Modal, TextBase } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { FlatList, ActivityIndicator, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Container, Header,Body,Title, Thumbnail} from 'native-base'
-import ImageViewer from 'react-native-image-zoom-viewer';
+
 class HomeScreen extends Component {
 
     constructor(props) {

@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
 //const appStackNav = AppStackNav;
 //const AppStack = createStackNavigator ({ Home: HomeScreen,serach: Serach, login: LoginPage })
 const AuthStack = createStackNavigator ({ signedinHome: signedinhome  })
-
+//added pages to the app stack that are not contained within the auth or normal stack
 const App = createSwitchNavigator(
     {
         App: AppStackNav,

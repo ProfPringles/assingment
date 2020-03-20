@@ -1,8 +1,8 @@
 import { RNCamera } from 'react-native-camera';
 import { Label } from 'native-base';
 import React, { Component } from 'react';
-import {ActivityIndicator, AsyncStorage, Text, View, TextInput, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView,Image } from 'react-native';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+import {AsyncStorage, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
 export default class cameraPage extends Component {
     constructor(props){
         super(props)

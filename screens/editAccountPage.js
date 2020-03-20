@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, ActivityIndicator, AsyncStorage, Text, View, Button, Image, StyleSheet, Alert, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { ButtonGroup } from 'react-native-elements';
 
-import { ScrollView } from 'react-native-gesture-handler';
-import { object } from 'prop-types';
 import { Label } from 'native-base';
-import { RNCamera } from 'react-native-camera';
 
 export default class Profile extends Component {
 
@@ -21,7 +17,6 @@ export default class Profile extends Component {
             token:'',
         }
     }
-
 
     getUserIDToken = async () => {
         const UserID = await AsyncStorage.getItem('LoginUserID');
@@ -60,12 +55,9 @@ export default class Profile extends Component {
         this.getUserIDToken();
     }
 
-
     render() {
         return (
-
             <View style={styles.container} >                    
-                    
 
                 <TouchableOpacity accessible={true} style={styles.back}
                     onPress={() => 
@@ -80,11 +72,10 @@ export default class Profile extends Component {
                     onPress={()=>{
                         this.props.navigation.navigate('cameraPage')
                     }}>
-                        <Text style={{ top: -20,textAlign: "center", color: "white",   fontSize: 80}}>
+                        <Text style={{ top: -20,textAlign: "center", color: "white", fontSize: 80}}>
                          <Image
                          style={{
                          flex: 1,
-                         //backgroundColor: '#A9A9A9',
                          textAlign: 'Center',
                          width: 100,
                          height: 100,

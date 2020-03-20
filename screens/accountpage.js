@@ -128,7 +128,8 @@ export default class Profile extends Component {
     isfollowing(followers){
         const loggedInUSerID =this.state.loggedInUSerID
         let following = false;
-        /*map the followers json to a javascript array and check if the person is 
+        /*
+          map the followers json to a javascript array and check if the person is 
           is already following so that I can change the follow un follow button text   
         */
         followers.map((item, index) =>{
@@ -203,7 +204,6 @@ export default class Profile extends Component {
     }
     render() {
         return (
-
             <Container style={styles.container}>
                 <Button accessible={true} style={styles.buttonContainer}  onPress={() =>{
                         console.log("pressed"),
@@ -212,21 +212,18 @@ export default class Profile extends Component {
                                 this.props.navigation.navigate('Home');
                             }else{
                                 this.props.navigation.navigate('signedinhome');
-                            }
-                                
+                            }       
                         })
-                    }
-                     
+                    }     
                 }>
-                    <Text>home</Text>
+                <Text>home</Text>
                 </Button>
                 <View style={styles.header}>
                 <Image source={{
+                    //addding the string to the end of the uri other wise the image does not update
                     uri: this.state.userPicUri +'?' + Date.now(),
                  }}
-                 style={styles.avatar} 
-                /> 
-                    
+                 style={styles.avatar} />  
                     <Text style={styles.name}>{this.state.UserData.family_name}</Text>
                     <Text style={styles.accountname}>{this.state.UserData.given_name}</Text>
 
@@ -275,8 +272,6 @@ export default class Profile extends Component {
                         keyExtractor={({ id }, index) => id}
                     />
                 </ScrollView>
-
-
             </Container>
         );
     }

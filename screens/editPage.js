@@ -5,36 +5,27 @@ import {Container} from 'native-base'
 
 class  editPage extends Component {
 
-        constructor(props) {
-            super(props);
-            this.state = {
-                chit_content:'',   
-                edit: ''
-            }
+    constructor(props) {
+        super(props);
+        this.state = {
+            chit_content:'',   
+            edit: ''
         }
-        // save the chit content to be used in the drafts page.
-        /*saveChit = async()=>{
-
-              AsyncStorage.setItem('toBedited', JSON.stringify(this.state.chit_content));
-        }*/
-
-        saveChit = async()=>{
-            const tobeedited =await AsyncStorage.getItem("toBedited")
-            console.log(tobeedited)
-            AsyncStorage.removeItem(tobeedited)
-            
-        }
-        setchit =async()=>{
-            await AsyncStorage.setItem(this.state.chit_content, JSON.stringify(this.state.chit_content))
-        }
-
-        componentDidMount() {
-           this.saveChit()
-        }
-
+    }
+    saveChit = async()=>{
+        const tobeedited =await AsyncStorage.getItem("toBedited")
+        console.log(tobeedited)
+        AsyncStorage.removeItem(tobeedited)   
+    }
+    setchit =async()=>{
+        await AsyncStorage.setItem(this.state.chit_content, JSON.stringify(this.state.chit_content))
+    }
+    componentDidMount() {
+        this.saveChit()
+    }
     render() {
         return (
-            <View style={styles.wrapper}>
+            <Container style={styles.wrapper}>
                 <TextInput
                       accessible={true}
                       placeholder="edit"
@@ -57,7 +48,7 @@ class  editPage extends Component {
                         save
                     </Text>
                 </TouchableOpacity>
-            </View>  
+            </Container>  
         );
     }
 }

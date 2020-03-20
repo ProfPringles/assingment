@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, ActivityIndicator,TouchableOpacity, TextInput, Image, AsyncStorage, Button, Alert, FlatList } from 'react-native';
-import { Label, Container, Header, Body, Title, Item } from 'native-base';
-import { color } from 'react-native-reanimated';
+import { StyleSheet, Text, View,TouchableOpacity, AsyncStorage, FlatList } from 'react-native';
+import { Label } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
-
 
 class DraftsPage extends Component {
     
@@ -13,10 +11,8 @@ class DraftsPage extends Component {
             savedChit:'', 
             edited:'',
             allchits: []  
-
         } 
     }
-
     getAllChits = async()=>{
         var ReturnVal =[]; 
         try{
@@ -29,31 +25,26 @@ class DraftsPage extends Component {
         this.setState({
             allchits: ReturnVal.splice(4, 5)
         })
-        console.log("here", this.state.allchits)
+        console.log("all saved chits: ", this.state.allchits)
         return ReturnVal.splice(0, 4)
     }
 
     delte(item){
         console.log(item);
-        AsyncStorage.removeItem(item);
-        
+        AsyncStorage.removeItem(item); 
     }
    
     editCHit(item){
         this.props.navigation.navigate('editpage')
-        
         AsyncStorage.setItem("toBedited", item)  
     }
     componentDidMount() {
         AsyncStorage.removeItem("toBedited");
         AsyncStorage.removeItem("chitID");
         this.getAllChits() 
-
-      
     }
     render() {
         return (
-
             <ScrollView style={styles.container}> 
                 <Label accessible={true} style={styles.label} >latest chit:</Label>
                 <FlatList style={{}}  
@@ -61,17 +52,15 @@ class DraftsPage extends Component {
                     renderItem={({ item, index }) =>
                     <View style={styles.item}>
                         <Text accessible={true} style={styles.text} >{item}</Text>
-
-                        <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>{this.delte(item)}}
-                        ><Text style={styles.textDelete} >delete</Text></TouchableOpacity>
-
-                    <TouchableOpacity style={styles.buttonDelete} onPress={() => this.editCHit(item)}><Text style={styles.edit}>edit</Text></TouchableOpacity>    
+                        <TouchableOpacity accessible={true} style={styles.buttonDelete} onPress={()=>{this.delte(item)}}>
+                            <Text style={styles.textDelete} >delete</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonDelete} onPress={() => this.editCHit(item)}><Text style={styles.edit}>edit</Text></TouchableOpacity>    
                     </View>
 
                     }                        
                     keyExtractor={({ item }, index) => item}
                 />
-                </ScrollView>
+            </ScrollView>
             
         );
     }
